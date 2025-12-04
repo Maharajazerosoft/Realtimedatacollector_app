@@ -1,0 +1,7 @@
+{
+  "name": "RealTimeDataCollector",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
