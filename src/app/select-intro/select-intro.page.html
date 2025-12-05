@@ -1,0 +1,61 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <img *ngIf="!logoImage || logoImage==''" src="../../assets/img/logo.png" />
+        <img *ngIf="logoImage && logoImage!=''" [src]="logoImage" />
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <div id="container">
+        <h1>{{introContent.section_title}}</h1>
+        <div class="white-container" *ngIf="!fetchingStatus">
+            <ion-button fill="clear" [routerLink]="['/companycode']" class="create-acc-btn type-in">
+                <div>
+                    <p class="first_ln">
+                        <ion-label>Begin Taking Survey:</ion-label>
+                    </p>
+                    <p class="second_ln">
+                        <ion-label>Type in Access Code Provided by the Account Holder</ion-label>
+                    </p>
+                </div>
+                <br/>
+            </ion-button>
+            <ion-button fill="clear" [routerLink]="['/signup']" class="create-acc-btn type-ins">
+                <div>
+                    <p class="first_ln">
+                        <ion-label>Create Survey and Gather Data:</ion-label>
+                    </p>
+                    <p class="second_ln">
+                        <ion-label>Click to Start Your Free Admin Account and Survey Builder</ion-label>
+                    </p>
+                </div>
+                <br/>
+            </ion-button>
+            <div class="custom" [innerHTML]="sanitize.bypassSecurityTrustHtml(introContent.section_content)"></div>
+            <a class="content-link" style="margin-left: 10%;" (click)="goToOtherContentPage('privacy-master')">Privacy Policy</a>
+            <a class="content-link" style="margin-left:10px" (click)="goToOtherContentPage('terms-master')">Terms and Conditions</a>
+
+        </div>
+        <div class="white-container" *ngIf="fetchingStatus">
+            <div class="ion-padding custom-skeleton intro-button-default">
+                <ion-skeleton-text animated style="width: 190px;height:50px"></ion-skeleton-text>
+            </div>
+            <div class="ion-padding intro-content-skeleton">
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                <ion-skeleton-text animated></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            </div>
+            <div class="ion-padding custom-skeleton intro-button-default">
+                <ion-skeleton-text animated style="width: 190px;height:50px"></ion-skeleton-text>
+            </div>
+        </div>
+    </div>
+</ion-content>
