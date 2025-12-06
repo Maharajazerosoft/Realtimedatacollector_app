@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start" class="back-arrow">
+      <!-- Only changed the icon name for Ionic 8 compatibility -->
+      <ion-button color="primary" fill="clear" [routerLink]="['/select-intro']">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <!-- Added missing closing quote for alt attribute -->
+    <img src="../../assets/img/logo.png" alt="logo">
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card class="white-container">
+    <div class="code ion-margin-vertical">
+      Please enter the unique code provided by your company or other entities
+    </div>
+    
+    <!-- Added Enter key support for better UX -->
+    <input 
+      type="text" 
+      placeholder="ABC123" 
+      class="comp-code-local" 
+      list="local_codes" 
+      [(ngModel)]="companyCode"
+      (keyup.enter)="submitCode(companyCode)"
+    >
+    
+    <datalist id="local_codes">
+      <option [value]="c.comp_code" *ngFor="let c of localCompanyCodes">{{c.comp_name}}</option>
+    </datalist>
+    
+    <div class="ion-text-center ion-margin-top">
+      <!-- Added disabled state for better UX -->
+      <ion-button 
+        style="--background:linear-gradient(180deg, #cd43ec 0%, #b37cf0 100%)" 
+        (click)="submitCode(companyCode)"
+        [disabled]="!companyCode || companyCode.trim() === ''"
+      >
+        Submit to Save
+      </ion-button>
+    </div>
+  </ion-card>
+</ion-content>

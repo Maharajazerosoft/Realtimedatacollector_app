@@ -7,6 +7,14 @@ const routes: Routes = [
     path: 'select-intro',
     loadChildren: () => import('./select-intro/select-intro.module').then(m => m.SelectIntroPageModule)
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },  {
+    path: 'companycode',
+    loadChildren: () => import('./companycode/companycode.module').then( m => m.CompanycodePageModule)
+  }
+
 ];
 
 @NgModule({

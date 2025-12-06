@@ -1,0 +1,86 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start" class="back-arrow">
+      <!-- Updated: Changed from /home to /select-intro to match new routing -->
+      <ion-button fill="clear" [routerLink]="['/select-intro']">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- Updated: Better null/undefined handling with safe navigation operator -->
+    <img *ngIf="!logoImage || logoImage==''" src="../../assets/img/logo.png" alt="Default Logo"/>
+    <img *ngIf="logoImage && logoImage!=''" [src]="logoImage" alt="Company Logo"/>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="container">
+    <h1>Login</h1>
+    <div class="white-container">
+      <!-- <img src="../../assets/img/img-login.jpg" class="login-img"/> -->
+      <div class="login-form">
+        <div class="suggestion-text">
+          <ion-input 
+            type="text" 
+            name="user" 
+            placeholder="Email" 
+            [(ngModel)]="dataModel.uEmail" 
+            (keyup)="findSuggestion(dataModel.uEmail)"
+            aria-label="Email input"
+          ></ion-input>
+          <div id="suggestion-list-id" class="suggestion-list" style="display: none;">
+            <ul class="suggestion-list-email">
+
+            </ul>
+            <div class="suggestion-list-scrollbar" id="suggestion-list-scrollbar-id"></div>
+          </div>
+        </div>
+        <ion-input 
+          type="password" 
+          name="pass" 
+          placeholder="Password" 
+          [(ngModel)]="dataModel.uPass"
+          aria-label="Password input"
+        ></ion-input>
+      </div>
+
+      <ion-row>
+        <!-- Updated: Added expand="block" for better mobile responsiveness -->
+        <ion-button 
+          class="ion-text-capitalize" 
+          fill="clear" 
+          expand="block"
+          (click)="forgotPasswordModal()"
+        >
+          Forgot Password?
+        </ion-button>
+      </ion-row>
+
+      <div class="login-buttons">
+        <!-- Updated: Added button types and ARIA labels for accessibility -->
+        <ion-button 
+          class="cancel-btn" 
+          style="margin-right: 14px;" 
+          (click)="onButtonClick('cancel','')"
+          fill="outline"
+          type="button"
+          aria-label="Cancel and go back"
+        >
+          Back
+        </ion-button>
+        <ion-button 
+          class="login-btn" 
+          (click)="onButtonClick('login',dataModel)"
+          type="submit"
+          aria-label="Login button"
+        >
+          Login
+        </ion-button>
+      </div>
+
+      <p class="survey-note ion-text-left">
+        Note: Please register in order to take the survey provided by the Survey Owner. Only the survey owner has access to your account info.
+      </p>
+
+    </div>
+  </div>
+</ion-content>
