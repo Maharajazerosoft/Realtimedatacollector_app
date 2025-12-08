@@ -18,6 +18,14 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'surveyform',
+    loadChildren: () => import('./surveyform/surveyform.module').then( m => m.SurveyformPageModule)
+  },
+  {
+    path: 'surveyresult',
+    loadChildren: () => import('./surveyresult/surveyresult.module').then( m => m.SurveyresultPageModule)
   }
 
 ];

@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-button
+    color="primary" slot="end" class="home_btn" (click)="LogoutApp()">
+      {{exitBtnText}}
+    </ion-button>
+
+    <img *ngIf="!logoImage || logoImage==''" src="../../assets/img/logo.png"/>
+    <img *ngIf="logoImage && logoImage!=''" [src]="logoImage"/>
+
+    <ion-button class="right_btn" (click)="gotoNav('startover', '0')"
+    color="primary" slot="end">
+      Take <br> Survey
+    </ion-button>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="container">
+    <h1>Survey Result</h1>
+    <div class="white-container" *ngIf="thankyouContent!=null">
+      <img src="../../assets/img/img-thankyou.jpg" class="reg-img"/>
+      <!-- <ion-button style="max-width: unset; font-size: 22px;;height:60px;" class="login-btn two-lines" (click)="gotoNav('sendcopy','1')">Email Self a Survey<br> / Record Copy</ion-button> -->
+      <ion-button style="max-width: unset; font-size: 22px;;height:60px;" class="login-btn two-lines" (click)="gotoNav('sendcopy','1')">Email Self a Copy <br> of the survey</ion-button>
+
+      <!-- <ion-button style="max-width: unset; font-size: 13px;;height:77px;" class="login-btn two-lines" (click)="gotoNav('sendcopy', '2')">Admin Notes allow the survey <br> creators to record personal observations.<br> It is their choice to either share <br> or not share the Admin Notes as part of <br> the Email Self a Copy.</ion-button> -->
+      <ion-button style="max-width: unset; font-size: 11px;;height:77px;" class="login-btn1 two-lines" (click)="gotoNav('sendcopy', '2')">Admin Notes allow the survey creators to record<br>personal observations. They may choose to share<br>or not share the Notes when you Email Self a Copy.</ion-button>
+    
+    
+      <div [innerHTML]="thankyouContent"></div>
+      <ion-button class="login-btn" (click)="gotoNav('startover', '0')">Start Over &nbsp;<ion-icon name="refresh"></ion-icon></ion-button>
+    </div>
+    <div class="white-container" *ngIf="thankyouContent==null">
+      <div class="ion-padding custom-skeleton result-img-default">
+        <ion-skeleton-text animated style="width: 300px;height:110px"></ion-skeleton-text>
+      </div>
+      <div class="ion-padding result-content-skeleton">
+        <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+      </div>
+      <div class="ion-padding custom-skeleton result-button-default">
+        <ion-skeleton-text animated style="width: 190px;height:50px"></ion-skeleton-text>
+      </div>
+      <div class="ion-padding custom-skeleton result-button-default-last">
+        <ion-skeleton-text animated style="width: 190px;height:50px"></ion-skeleton-text>
+      </div>
+    </div>
+  </div>
+</ion-content>
