@@ -70,7 +70,7 @@ ion-content {
             ion-button.type-in {
                 // max-width: unset;
                 white-space: normal;
-                padding: 8px;
+                // padding: 8px;
                 height: unset;
                 color: #fff;
                 // background-color: #8d66a9;
@@ -80,7 +80,7 @@ ion-content {
             ion-button.type-ins {
                 // max-width: unset;
                 white-space: normal;
-                padding: 8px;
+                // padding: 8px;
                 height: unset;
                 color: #fff;
                 // background-color: #8d66a9;
@@ -102,7 +102,7 @@ ion-content {
         }
         p {
             font-size: 18px;
-            line-height: 22px;
+            line-height: 18px;
             color: #8c8c8c;
             margin: 0;
         }
@@ -136,7 +136,7 @@ ion-content {
 }
 
 .content-link {
-    font-size: 17px;
+    font-size: 12px;
     text-decoration: underline !important;
 }
 
@@ -144,4 +144,8 @@ ion-content {
     table {
         padding: 10px;
     }
+}
+
+.text-center {
+    text-align: center;
 }
