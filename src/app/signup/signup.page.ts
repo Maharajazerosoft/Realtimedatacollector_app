@@ -64,7 +64,7 @@ export class SignupPage implements OnInit {
               this.common.presentToast(res.error);
             }
           })
-          .catch((err: any) => {
+          .catch(err => {
             console.log(err);
             this.common.presentToast("Connection Error");
           });
