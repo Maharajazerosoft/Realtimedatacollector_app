@@ -157,7 +157,7 @@ ion-button {
     padding: 0px 4px !important;
     --placeholder-color: rgb(133, 132, 132) !important;
     --placeholder-font-family: "Roboto Condensed", sans-serif;
-    height: 44px;
+    // height: 44px;
 }
 
 
@@ -188,6 +188,8 @@ ion-input {
 .input-icon {
     position: absolute;
     right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
     cursor: pointer;
     font-size: 22px;
     color: gray;
