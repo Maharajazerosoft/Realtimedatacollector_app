@@ -1,4 +1,4 @@
-import type { CapacitorConfig } from '@capacitor/cli';
+import type { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
@@ -6,9 +6,15 @@ const config: CapacitorConfig = {
   webDir: 'www',
   plugins: {
     StatusBar: {
-      style: 'Dark', // or 'Light'
-      overlaysWebView: false, // Important: set to false
-      backgroundColor: '#1ac1ee'
+      style: "Dark",          
+      overlaysWebView: false, 
+      backgroundColor: "#1ac1ee"
+    },
+    SplashScreen: {
+      launchShowDuration: 2000,
+      backgroundColor: "#ffffff",
+      androidScaleType: "CENTER_CROP",
+      showSpinner: false
     }
   }
 };
