@@ -1,0 +1,211 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start" class="back-arrow">
+      <ion-button color="primary" fill="clear" [routerLink]="['/select-intro']">
+        <ion-icon slot="icon-only" name="arrow-back-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <div class="txtcenter">
+      <img src="../../assets/img/logo.png" alt="logo" />
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="txtcenter">
+    <h4 style="font-size: 20px;color:#fff; font-weight: 600;">Create Your Admin Account</h4>
+  </div>
+  
+  <div style="margin:0px;">
+    <div class="white-container">
+      <form class="login-form mt-4" [formGroup]="signupform">
+        <!-- Company Name -->
+        <div class="pad">
+          <div class="input-container">
+            <ion-input 
+              type="text" 
+              class="test" 
+              placeholder="Company Name" 
+              formControlName="cname"
+              label="Company Name"
+              label-placement="floating"
+            >
+              <ion-icon name="sunny-outline" slot="start" class="input-icon"></ion-icon>
+            </ion-input>
+          </div>
+          <div *ngIf="signupform.get('cname')?.errors">
+            <span
+              *ngIf="signupform.get('cname')?.touched && !signupform.get('cname')?.valid && !signupform.get('cname')?.value"
+              class="validate-errors pb-3 float-left">
+              Enter Company Name<br>
+            </span>
+          </div>
+        </div>
+
+        <!-- User Name -->
+        <div class="pad">
+          <div class="input-container">
+            <ion-input 
+              type="text" 
+              class="test" 
+              placeholder="User Name" 
+              formControlName="uname"
+              label="User Name"
+              label-placement="floating"
+            >
+              <ion-icon name="person-outline" slot="start" class="input-icon"></ion-icon>
+            </ion-input>
+          </div>
+          <div *ngIf="signupform.get('uname')?.errors">
+            <span
+              *ngIf="signupform.get('uname')?.touched && !signupform.get('uname')?.valid && !signupform.get('uname')?.value"
+              class="validate-errors pb-3 float-left">
+              Enter User Name<br>
+            </span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="pad">
+          <div class="input-container">
+            <ion-input 
+              type="email" 
+              class="test" 
+              placeholder="Email" 
+              formControlName="email"
+              label="Email"
+              label-placement="floating"
+            >
+              <ion-icon name="mail-outline" slot="start" class="input-icon"></ion-icon>
+            </ion-input>
+          </div>
+          <div *ngIf="signupform.get('email')?.errors">
+            <span
+              *ngIf="signupform.get('email')?.touched && !signupform.get('email')?.valid && !signupform.get('email')?.value"
+              class="validate-errors pb-3 float-left pt-3">
+              Enter Email <br>
+            </span>
+            <span 
+              class="validate-errors pb-3 float-left" 
+              *ngIf="signupform.get('email')?.errors?.['pattern']">
+              Enter valid email address
+            </span>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="pad">
+          <div class="input-container">
+            <ion-input 
+              [type]="showPassword ? 'text' : 'password'" 
+              class="test" 
+              placeholder="Password" 
+              formControlName="password"
+              label="Password"
+              label-placement="floating"
+            >
+            </ion-input>
+            <ion-icon 
+              [name]="showPassword ? 'eye-off' : 'eye'" 
+              (click)="togglePasswordVisibility('password')" 
+              slot="end"
+              class="eye-icon">
+            </ion-icon>
+          </div>
+          <div *ngIf="signupform.get('password')?.errors">
+            <span
+              *ngIf="signupform.get('password')?.touched && !signupform.get('password')?.valid && !signupform.get('password')?.value"
+              class="validate-errors pb-3 float-left">
+              Enter Password<br>
+            </span>
+          </div>
+        </div>
+        
+        <!-- Confirm Password -->
+        <div class="pad">
+          <div class="input-container">
+            <ion-input 
+              [type]="showConfirmPassword ? 'text' : 'password'" 
+              class="test" 
+              placeholder="Confirm Password" 
+              formControlName="confirm"
+              label="Confirm Password"
+              label-placement="floating"
+            >  
+            </ion-input>
+            <ion-icon 
+              [name]="showConfirmPassword ? 'eye-off' : 'eye'" 
+              (click)="togglePasswordVisibility('confirm')" 
+              slot="end"
+              class="eye-icon">
+            </ion-icon>
+          </div>
+          <div *ngIf="signupform.get('confirm')?.errors">
+            <span
+              *ngIf="signupform.get('confirm')?.touched && !signupform.get('confirm')?.valid && !signupform.get('confirm')?.value"
+              class="validate-errors pb-3 float-left">
+              Enter Confirm Password<br>
+            </span>
+          </div>
+        </div>
+
+        <!-- Company Description -->
+        <div class="pad">
+          <div class="input-container">
+            <ion-input 
+              type="text" 
+              class="test" 
+              placeholder="Company Description" 
+              formControlName="desc"
+              label="Company Description"
+              label-placement="floating"
+            >
+              <ion-icon name="document-text-outline" slot="start" class="input-icon"></ion-icon>
+            </ion-input>
+          </div>
+          <div *ngIf="signupform.get('desc')?.errors">
+            <span
+              *ngIf="signupform.get('desc')?.touched && !signupform.get('desc')?.valid && !signupform.get('desc')?.value"
+              class="validate-errors pb-3 float-left">
+              Enter Company Description<br>
+            </span>
+          </div>
+        </div>
+        
+        <!-- Information Text -->
+        <p style="font-size: 16px;color: #707cba;margin-left: 8px;">
+          Please check your email (also junk mail) for instructions on how to create your data collector survey. 
+          <b style="font-size: 16px;color: #707cba;">The data gathering survey dashboard can only be accessed via laptop or desktop.</b>
+        </p>      
+        
+        <!-- SignUp Button -->
+        <ion-button 
+          style="--background:linear-gradient(180deg, #cd43ec 0%, #b37cf0 100%)" 
+          expand="block" 
+          (click)="onsubmit()">
+          SignUp
+        </ion-button>        
+        
+        <!-- Links and Text -->
+        <p style="font-size: 16px;color: #707cba;text-align: center; margin-bottom: -15px;">
+          <a style="font-size: 17px; color: #707cba; font-weight: 600;" href="https://www.realtimedatacollector.com/multiple/client/beforereset.php">
+            Forget Password?
+          </a>
+        </p>        
+        
+        <p style="font-size: 16px;color: #707cba;text-align: center; margin-bottom: -15px;">
+          Want to access your Admin Account?
+        </p>        
+        
+        <p style="font-size: 16px;color: #707cba;text-align: center;">
+          Visit 
+          <a style="font-size: 17px; color: #707cba; font-weight: 600;" href="https://www.realtimedatacollector.com/">
+            RealTimeDataCollector.com
+          </a> 
+          website.
+        </p>
+      </form>
+    </div>
+  </div>
+</ion-content>
