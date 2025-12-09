@@ -39,13 +39,8 @@
     font-weight: 400;
 }
 
-@font-face {
-    font-family: 'Open Sans Regular';
-    src: url('/assets/fonts/open-sans.regular.ttf');
-}
-
 * {
-    font-family: 'Open Sans Regular', sans-serif, 'Roboto Condensed';
+    font-family: 'Roboto Condensed', sans-serif;
     font-size: 13px;
 }
 
