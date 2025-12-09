@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start" class="back-arrow">
+      <ion-button color="primary" fill="clear" (click)="goBack()">
+        <!-- Updated icon name for Ionic 8 -->
+        <ion-icon name="arrow-back-circle" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <!-- Capacitor path compatibility - assets are served from root -->
+    <img *ngIf="!logoImage || logoImage==''" src="assets/img/logo.png"/>
+    <img *ngIf="logoImage && logoImage!=''" [src]="logoImage"/>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card class="component_card ion-padding">
+    <h2>{{pageTitle}}</h2>
+    <div [innerHTML]="pageContent"></div>
+  </ion-card>
+</ion-content>

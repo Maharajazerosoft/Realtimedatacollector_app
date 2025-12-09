@@ -26,7 +26,11 @@ const routes: Routes = [
   {
     path: 'surveyresult',
     loadChildren: () => import('./surveyresult/surveyresult.module').then( m => m.SurveyresultPageModule)
+  },  {
+    path: 'contentpage',
+    loadChildren: () => import('./contentpage/contentpage.module').then( m => m.ContentpagePageModule)
   }
+
 
 ];
 
