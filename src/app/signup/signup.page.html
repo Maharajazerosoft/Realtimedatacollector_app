@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-buttons slot="start" class="back-arrow">
       <ion-button color="primary" fill="clear" [routerLink]="['/select-intro']">
-        <ion-icon slot="icon-only" name="arrow-back-circle"></ion-icon>
+        <ion-icon slot="icon-only" name="arrow-undo-circle"></ion-icon>
       </ion-button>
     </ion-buttons>
     
@@ -28,10 +28,8 @@
               class="test" 
               placeholder="Company Name" 
               formControlName="cname"
-              label="Company Name"
-              label-placement="floating"
             >
-              <ion-icon name="sunny-outline" slot="start" class="input-icon"></ion-icon>
+              <ion-icon name="sunny-outline" class="input-icon"></ion-icon>
             </ion-input>
           </div>
           <div *ngIf="signupform.get('cname')?.errors">
@@ -51,10 +49,8 @@
               class="test" 
               placeholder="User Name" 
               formControlName="uname"
-              label="User Name"
-              label-placement="floating"
             >
-              <ion-icon name="person-outline" slot="start" class="input-icon"></ion-icon>
+              <ion-icon name="person-outline" class="input-icon"></ion-icon>
             </ion-input>
           </div>
           <div *ngIf="signupform.get('uname')?.errors">
@@ -74,10 +70,8 @@
               class="test" 
               placeholder="Email" 
               formControlName="email"
-              label="Email"
-              label-placement="floating"
             >
-              <ion-icon name="mail-outline" slot="start" class="input-icon"></ion-icon>
+              <ion-icon name="mail-outline" class="input-icon"></ion-icon>
             </ion-input>
           </div>
           <div *ngIf="signupform.get('email')?.errors">
@@ -102,8 +96,6 @@
               class="test" 
               placeholder="Password" 
               formControlName="password"
-              label="Password"
-              label-placement="floating"
             >
             </ion-input>
             <ion-icon 
@@ -130,8 +122,6 @@
               class="test" 
               placeholder="Confirm Password" 
               formControlName="confirm"
-              label="Confirm Password"
-              label-placement="floating"
             >  
             </ion-input>
             <ion-icon 
@@ -158,10 +148,8 @@
               class="test" 
               placeholder="Company Description" 
               formControlName="desc"
-              label="Company Description"
-              label-placement="floating"
             >
-              <ion-icon name="document-text-outline" slot="start" class="input-icon"></ion-icon>
+              <ion-icon name="document-text-outline" class="input-icon"></ion-icon>
             </ion-input>
           </div>
           <div *ngIf="signupform.get('desc')?.errors">
