@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-button
-    color="primary" slot="end" class="home_btn" (click)="LogoutApp()">
+    color="primary" slot="primary" class="home_btn" (click)="LogoutApp()">
       {{exitBtnText}}
     </ion-button>
 
@@ -9,7 +9,7 @@
     <img *ngIf="logoImage && logoImage!=''" [src]="logoImage"/>
 
     <ion-button class="right_btn" (click)="gotoNav('startover', '0')"
-    color="primary" slot="end">
+    color="primary">
       Take <br> Survey
     </ion-button>
   </ion-toolbar>
@@ -29,7 +29,7 @@
     
     
       <div [innerHTML]="thankyouContent"></div>
-      <ion-button class="login-btn" (click)="gotoNav('startover', '0')"><p>Start Over&nbsp;</p><ion-icon name="refresh"></ion-icon></ion-button>
+      <ion-button class="login-btn refresh-button" (click)="gotoNav('startover', '0')"><p class="font-white">Start Over&nbsp;</p><ion-icon name="refresh" class="refresh-icon"></ion-icon></ion-button>
     </div>
     <div class="white-container" *ngIf="thankyouContent==null">
       <div class="ion-padding custom-skeleton result-img-default">
