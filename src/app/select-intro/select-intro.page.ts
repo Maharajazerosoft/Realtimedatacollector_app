@@ -4,7 +4,7 @@ import { WebservicesService } from '../providers/webservices/webservices.service
 import { CommonService } from '../providers/common/common.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
+// import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
 import { Platform } from '@ionic/angular';
 
 @Component({
@@ -35,20 +35,20 @@ export class SelectIntroPage implements OnInit {
   ngOnInit() {
     this.fillInfo();
     this.platform.ready().then(() => {
-      this.showBannerAd();
+      // this.showBannerAd();
     });
     //this.bannerad();
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad SearchresultPage");
-    this.showBannerAd();
+    // this.showBannerAd();
   }
 
 
 
   fillInfo() {
-    this.showBannerAd();
+    // this.showBannerAd();
     this.fetchingStatus = true;
     this.web.getData('getAdminIntroContent', '').then(res => {
       this.fetchingStatus = false;
@@ -80,16 +80,16 @@ export class SelectIntroPage implements OnInit {
     }
   }
 
-  async showBannerAd() {
-    const options: BannerAdOptions = {
-      adId: 'ca-app-pub-8416006941552663/5184354352', // <-- Your banner Ad ID
-      adSize: BannerAdSize.BANNER,
-      position: BannerAdPosition.BOTTOM_CENTER,
-      margin: 0,
-      isTesting: false,  // USE true while debugging
-    };
+  // async showBannerAd() {
+  //   const options: BannerAdOptions = {
+  //     adId: 'ca-app-pub-8416006941552663/5184354352', // <-- Your banner Ad ID
+  //     adSize: BannerAdSize.BANNER,
+  //     position: BannerAdPosition.BOTTOM_CENTER,
+  //     margin: 0,
+  //     isTesting: false,  // USE true while debugging
+  //   };
 
-    await AdMob.showBanner(options);
-  }
+  //   await AdMob.showBanner(options);
+  // }
 
 }

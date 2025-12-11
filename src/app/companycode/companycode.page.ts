@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { CommonService } from "../providers/common/common.service";
 import { WebservicesService } from "../providers/webservices/webservices.service";
 import { Router } from "@angular/router";
-import { AdMob, BannerAdPosition } from '@capacitor-community/admob';
+// import { AdMob, BannerAdPosition } from '@capacitor-community/admob';
 
 @Component({
   selector: "app-companycode",
@@ -21,7 +21,7 @@ export class CompanycodePage implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.bannerad();
+    // this.bannerad();
   }
 
   updateCompany(code: string) {
@@ -122,21 +122,21 @@ export class CompanycodePage implements OnInit {
     }
   }
 
-  async bannerad(){
-    try {
-      await AdMob.initialize();
+  // async bannerad(){
+  //   try {
+  //     await AdMob.initialize();
       
-      const options = {
-        adId: 'ca-app-pub-8416006941552663/5184354352',
-        //isTesting: true,
-        position: BannerAdPosition.BOTTOM_CENTER,
-        margin: 0
-      };
+  //     const options = {
+  //       adId: 'ca-app-pub-8416006941552663/5184354352',
+  //       //isTesting: true,
+  //       position: BannerAdPosition.BOTTOM_CENTER,
+  //       margin: 0
+  //     };
       
-      await AdMob.showBanner(options);
-      console.log('Banner ad loaded');
-    } catch (e) {
-      console.log('Banner ad error:', e);
-    }
-  }
+  //     await AdMob.showBanner(options);
+  //     console.log('Banner ad loaded');
+  //   } catch (e) {
+  //     console.log('Banner ad error:', e);
+  //   }
+  // }
 }

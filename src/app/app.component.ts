@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AdMob } from '@capacitor-community/admob';
+// import { AdMob } from '@capacitor-community/admob';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +13,6 @@ export class AppComponent {
   }
 
   async initializeAdMob() {
-    await AdMob.initialize();
+    // await AdMob.initialize();
   }
 }

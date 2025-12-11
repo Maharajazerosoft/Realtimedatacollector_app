@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.surveyapp.surveyform;
 
 import com.getcapacitor.BridgeActivity;
 
