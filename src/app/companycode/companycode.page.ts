@@ -24,7 +24,7 @@ export class CompanycodePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.bannerad();
+    this.bannerad();
   }
 
   updateCompany(code: string) {
@@ -142,9 +142,10 @@ export class CompanycodePage implements OnInit {
         position: BannerAdPosition.BOTTOM_CENTER,
         margin: 0
       };
-    }
-    catch (err) {
-      console.error('Banner ad failed to show', err);
+      await AdMob.showBanner(options);
+      console.log('Banner ad loaded');
+    } catch (e) {
+      console.log('Banner ad error:', e);
     }
   }
 }

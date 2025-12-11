@@ -36,20 +36,19 @@ export class SelectIntroPage implements OnInit {
   ngOnInit() {
     this.fillInfo();
     this.platform.ready().then(() => {
-      // this.showBannerAd();
+      this.showBannerAd();
     });
-    //this.bannerad();
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad SearchresultPage");
-    // this.showBannerAd();
+    this.showBannerAd();
   }
 
 
 
   fillInfo() {
-    // this.showBannerAd();
+    this.showBannerAd();
     this.fetchingStatus = true;
     this.web.getData('getAdminIntroContent', '').then(res => {
       this.fetchingStatus = false;
