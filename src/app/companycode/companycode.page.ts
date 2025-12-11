@@ -14,17 +14,17 @@ import { AdMob, BannerAdPosition } from '@capacitor-community/admob';
 })
 export class CompanycodePage implements OnInit {
   companyCode: string = '';
-  localCompanyCodes:any = [];
+  localCompanyCodes: any = [];
 
   constructor(
     private common: CommonService,
     private web: WebservicesService,
     private router: Router,
     private platform: Platform
-    ) {}
+  ) { }
 
   ngOnInit() {
-    this.bannerad();
+    // this.bannerad();
   }
 
   updateCompany(code: string) {
@@ -38,12 +38,12 @@ export class CompanycodePage implements OnInit {
             res.logo.comp_logo_image
           );
           if (res.members_status == false || res.questions_status == false) {
-           // this.router.navigate(['/subscription-failed']);
-           this.router.navigate(["/home"]);
+            // this.router.navigate(['/subscription-failed']);
+            this.router.navigate(["/home"]);
           } else {
             this.router.navigate(["/home"]);
           }
-        } else{
+        } else {
           localStorage.removeItem('surveyCompanyCodeLocal');
           localStorage.removeItem('surveyCompanyLogoLocal');
           this.common.presentToast(res.error);
@@ -76,8 +76,8 @@ export class CompanycodePage implements OnInit {
               res.logo.comp_logo_image
             );
 
-            this.addCompanyCodeLocal({comp_name: res.data.comp_name, comp_code: res.data.comp_code})
-            
+            this.addCompanyCodeLocal({ comp_name: res.data.comp_name, comp_code: res.data.comp_code })
+
             this.updateCompany(res.data.id);
             this.companyCode = '';
             //this.router.navigate(["/home"]);
@@ -100,39 +100,39 @@ export class CompanycodePage implements OnInit {
       this.updateCompany(code);
     }
 
-    
-    let codes:any = localStorage.getItem('company_codes_local');
-    if(!codes || codes==''){
+
+    let codes: any = localStorage.getItem('company_codes_local');
+    if (!codes || codes == '') {
       return;
     }
 
     this.localCompanyCodes = JSON.parse(codes);
   }
 
-  addCompanyCodeLocal(company:any){
-    let codes:any = localStorage.getItem('company_codes_local');
-    if(codes && codes!=''){
+  addCompanyCodeLocal(company: any) {
+    let codes: any = localStorage.getItem('company_codes_local');
+    if (codes && codes != '') {
       codes = JSON.parse(codes);
-    }else{
+    } else {
       codes = [];
     }
 
-    const isExist = codes.find((x:any) => x.comp_code==company.comp_code);
-    if(!isExist){
+    const isExist = codes.find((x: any) => x.comp_code == company.comp_code);
+    if (!isExist) {
       codes.push(company);
       localStorage.setItem('company_codes_local', JSON.stringify(codes));
       this.localCompanyCodes = codes;
     }
   }
 
-  async bannerad(){
+  async bannerad() {
     if (!Capacitor.isNativePlatform()) {
       return;
     }
     await this.platform.ready();
     try {
       await AdMob.initialize();
-      
+
       // Disable test ads now that integration is verified.
       const useTestAds = true;
 
@@ -142,11 +142,9 @@ export class CompanycodePage implements OnInit {
         position: BannerAdPosition.BOTTOM_CENTER,
         margin: 0
       };
-      
-      await AdMob.showBanner(options);
-      console.log('Banner ad loaded');
-    } catch (e) {
-      console.log('Banner ad error:', e);
+    }
+    catch (err) {
+      console.error('Banner ad failed to show', err);
     }
   }
 }

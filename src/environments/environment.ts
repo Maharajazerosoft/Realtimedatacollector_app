@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  base_url: 'http://realtimedatacollector.com/multiple/',
-  clientAdminUrl: 'http://realtimedatacollector.com/multiple/client/',
+  base_url: 'https://realtimedatacollector.com/multiple/',
+  clientAdminUrl: 'https://realtimedatacollector.com/multiple/client/',
   apiUrl: 'https://www.realtimedatacollector.com/api/v2/webservices'
 };
 

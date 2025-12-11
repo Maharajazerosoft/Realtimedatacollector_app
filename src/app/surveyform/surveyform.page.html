@@ -214,24 +214,40 @@
               </div>
               <div *ngIf="tForm.qnType==='image'" class="formText">
                 <ion-item class="item-background-color">
-                  <div *ngIf="formData[getLoopVal(i, j)]">
+                  <div
+                    *ngIf="formData[getLoopVal(i, j)] && getFileType(formData[getLoopVal(i, j)]) === 'image'"
+                  >
                     <img
                       class="upload-image"
                       [src]="formData[getLoopVal(i, j)]"
-                      alt="SurveyApp"
+                      alt="Uploaded Image"
                     />
                   </div>
+
+                  <div
+                    *ngIf="formData[getLoopVal(i, j)] && getFileType(formData[getLoopVal(i, j)]) === 'pdf'"
+                    class="pdf-preview"
+                  >
+                    <ion-icon
+                      name="document-text-outline"
+                      size="large"
+                      color="primary"
+                    ></ion-icon>
+                    <span>PDF Document</span>
+                  </div>
+
                   <ion-input
                     type="text"
                     placeholder="Upload Image"
                     readonly
                     [(ngModel)]="formData[getLoopVal(i, j)]"
                   ></ion-input>
+
                   <ion-icon
                     color="primary"
                     class="ion-padding-start"
                     name="cloud-upload-outline"
-                    (click)="actionSheetCamera(getLoopVal(i, j))"
+                    (click)="actionSheetUpload(getLoopVal(i, j))"
                   ></ion-icon>
                 </ion-item>
               </div>
