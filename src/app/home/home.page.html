@@ -5,61 +5,69 @@
         <ion-icon name="arrow-undo-circle" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <img *ngIf="!logoImage || logoImage==''" src="../../assets/img/logo.png"/>
-    <img *ngIf="logoImage && logoImage!=''" [src]="logoImage"/>
+    <img *ngIf="!logoImage || logoImage==''" src="../../assets/img/logo.png" />
+    <img *ngIf="logoImage && logoImage!=''" [src]="logoImage" />
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div id="container">
     <h1>Introduction</h1>
-      <div class="white-container" *ngIf="introContent!=null">
-          <ion-button *ngIf="introPageType==1" class="create-acc-btn" (click)="gotoNav('register')">Create Account</ion-button>
-          <ion-button *ngIf="introPageType==1" class="login-btn" (click)="gotoNav('login')">Login</ion-button>
+    <div class="white-container" *ngIf="introContent!=null">
+      <ion-button *ngIf="introPageType==1" class="create-acc-btn" (click)="gotoNav('register')">Create
+        Account</ion-button>
+      <ion-button *ngIf="introPageType==1" class="login-btn" (click)="gotoNav('login')">Login</ion-button>
 
-          <ion-button *ngIf="introPageType==2" class="login-btn" (click)="gotoNav('anonymous')"> 
-            <div>
-              Start <br> Anonymous survey
-            </div>
-          </ion-button>
-          
-          <div *ngIf="introPageType==1 || introPageType==2" [innerHTML]="sanitize.bypassSecurityTrustHtml(introContent)"></div>
+      <ion-button *ngIf="introPageType==2" class="login-btn" (click)="gotoNav('anonymous')">
+        <div>
+          Start Anonymous survey
+        </div>
+      </ion-button>
 
-          <p *ngIf="introPageType==1" class="survey-note">
-            Note: Please register in order to take the survey provided by the Survey Owner. Only the survey owner has access to your account info.
-          </p>
-
-          <div class="signup-agreement">
-          <div>To attend a survey means you agree to </div> <span> <a (click)="gotToPage('tos')">Terms of Service</a> and <a (click)="gotToPage('privacy')">Privacy Policy</a>.</span>
-          </div>
+      <div *ngIf="introPageType==1 || introPageType==2" [innerHTML]="sanitize.bypassSecurityTrustHtml(introContent)">
       </div>
-    
-     <div class="white-container" *ngIf="introContent==null && loading">
-        <div class="ion-padding custom-skeleton intro-button-default">
-            <ion-skeleton-text animated="true" style="width: 190px;height:50px"></ion-skeleton-text>
-        </div>
-        <div class="ion-padding intro-content-skeleton">
-            <ion-skeleton-text animated="true" style="width: 80%"></ion-skeleton-text>
-            <ion-skeleton-text animated="true"></ion-skeleton-text>
-            <ion-skeleton-text animated="true" style="width: 88%"></ion-skeleton-text>
-            <ion-skeleton-text animated="true" style="width: 70%"></ion-skeleton-text>
-            <ion-skeleton-text animated="true" style="width: 60%"></ion-skeleton-text>
-            <ion-skeleton-text animated="true" style="width: 70%"></ion-skeleton-text>
-            <ion-skeleton-text animated="true" style="width: 50%"></ion-skeleton-text>
-            <ion-skeleton-text animated="true" style="width: 50%"></ion-skeleton-text>
-            <ion-skeleton-text animated="true" style="width: 88%"></ion-skeleton-text>
-            <ion-skeleton-text animated="true" style="width: 70%"></ion-skeleton-text>
-            <ion-skeleton-text animated="true" style="width: 60%"></ion-skeleton-text>
-        </div>
-        <div class="ion-padding custom-skeleton intro-button-default">
-            <ion-skeleton-text animated="true" style="width: 190px;height:50px"></ion-skeleton-text>
-        </div>
+
+      <p *ngIf="introPageType==1" class="survey-note">
+        Note: Please register in order to take the survey provided by the Survey Owner. Only the survey owner has access
+        to your account info.
+      </p>
+
+      <div class="signup-agreement">
+        <div>To attend a survey means you agree to </div>
+        <span>
+          <a (click)="gotToPage('tos')">Terms of Service</a> and
+          <a (click)="gotToPage('privacy')">Privacy Policy</a>.
+        </span>
+      </div>
+    </div>
+
+    <div class="white-container" *ngIf="introContent==null && loading">
+      <div class="ion-padding custom-skeleton intro-button-default">
+        <ion-skeleton-text animated="true" style="width: 190px;height:50px"></ion-skeleton-text>
+      </div>
+      <div class="ion-padding intro-content-skeleton">
+        <ion-skeleton-text animated="true" style="width: 80%"></ion-skeleton-text>
+        <ion-skeleton-text animated="true"></ion-skeleton-text>
+        <ion-skeleton-text animated="true" style="width: 88%"></ion-skeleton-text>
+        <ion-skeleton-text animated="true" style="width: 70%"></ion-skeleton-text>
+        <ion-skeleton-text animated="true" style="width: 60%"></ion-skeleton-text>
+        <ion-skeleton-text animated="true" style="width: 70%"></ion-skeleton-text>
+        <ion-skeleton-text animated="true" style="width: 50%"></ion-skeleton-text>
+        <ion-skeleton-text animated="true" style="width: 50%"></ion-skeleton-text>
+        <ion-skeleton-text animated="true" style="width: 88%"></ion-skeleton-text>
+        <ion-skeleton-text animated="true" style="width: 70%"></ion-skeleton-text>
+        <ion-skeleton-text animated="true" style="width: 60%"></ion-skeleton-text>
+      </div>
+      <div class="ion-padding custom-skeleton intro-button-default">
+        <ion-skeleton-text animated="true" style="width: 190px;height:50px"></ion-skeleton-text>
+      </div>
     </div>
 
 
-    <div class="surveyf-form white-container" *ngIf="introContent==null && (loading==false)" style="min-height: 80vh; display: flex; align-items: center; padding: 1rem; justify-content: center;">
+    <div class="surveyf-form white-container" *ngIf="introContent==null && (loading==false)"
+      style="min-height: 80vh; display: flex; align-items: center; padding: 1rem; justify-content: center;">
       <p>
-          Content not loaded.
+        Content not loaded.
       </p>
     </div>
 

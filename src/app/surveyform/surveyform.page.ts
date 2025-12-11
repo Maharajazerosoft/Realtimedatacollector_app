@@ -10,6 +10,7 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Capacitor } from '@capacitor/core';
+import { AdMob, BannerAdPosition, BannerAdSize, type BannerAdOptions } from '@capacitor-community/admob';
 
 @Component({
   selector: 'app-surveyform',
@@ -67,6 +68,7 @@ export class SurveyformPage implements OnInit {
     this.formBuilder = [];
     this.companylogo = localStorage.getItem('surveyCompanyLogoLocal');
     this.updateLogo();
+    this.platform.ready().then(() => this.showBannerAd());
   }
   
   generateCaptcha() {
@@ -98,6 +100,25 @@ export class SurveyformPage implements OnInit {
       this.logoImage = '../../assets/img/logo.png';
     }else{
       this.logoImage = `${environment.base_url}uploads/logos/${logoUrl}`;
+    }
+  }
+
+  private async showBannerAd() {
+    if (!Capacitor.isNativePlatform()) {
+      return;
+    }
+    const options: BannerAdOptions = {
+      adId: 'ca-app-pub-8416006941552663/5184354352',
+      adSize: BannerAdSize.BANNER,
+      position: BannerAdPosition.BOTTOM_CENTER,
+      margin: 0,
+      isTesting: false,
+    };
+    try {
+      await AdMob.initialize();
+      await AdMob.showBanner(options);
+    } catch (err) {
+      console.error('Survey form banner ad failed to show', err);
     }
   }
   

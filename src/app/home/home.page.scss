@@ -18,6 +18,8 @@ ion-content {
     --ion-background-color: transparent;
     background-image: url('../../assets/img/bg_top_removed.jpg') !important;
     background-size: 100% 100%;
+    // Keep bottom content above the banner ad (test/production) + safe area.
+    --padding-bottom: calc(90px + env(safe-area-inset-bottom));
 
     ion-toolbar {
         --background: translucent;
@@ -40,9 +42,11 @@ ion-content {
             margin: 13px 25px;
             color: #164395;
             text-align: left;
-            padding: 8px 23px;
+            padding: 20px;
             line-height: 1.5;
             min-height: 250px;
+            // Add breathing room at the bottom so links don't sit under the banner.
+            // padding-bottom: 32px;
 
             .intro-button-default {
                 text-align: center;
@@ -85,10 +89,10 @@ ion-content {
                 --ion-color-primary: transparent;
                 font-family: 'Roboto Condensed', sans-serif;
                 font-weight: 400;
-                margin: 12px auto 14px auto;
+                margin-bottom: 14px;
                 //max-width: unset;
                 white-space: normal;
-                padding: 8px;
+                padding: 6px;
                 //height: unset;
                 text-align: left;
             }
@@ -159,7 +163,7 @@ ion-content {
     color: #1e4894;
 
     a {
-        color: #122448;
+        // color: #122448;
         text-decoration: underline !important;
     }
 }

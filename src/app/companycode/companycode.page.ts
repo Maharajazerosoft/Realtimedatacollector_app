@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { CommonService } from "../providers/common/common.service";
 import { WebservicesService } from "../providers/webservices/webservices.service";
 import { Router } from "@angular/router";
+import { Platform } from "@ionic/angular";
+import { Capacitor } from "@capacitor/core";
 import { AdMob, BannerAdPosition } from '@capacitor-community/admob';
 
 @Component({
@@ -17,7 +19,8 @@ export class CompanycodePage implements OnInit {
   constructor(
     private common: CommonService,
     private web: WebservicesService,
-    private router: Router
+    private router: Router,
+    private platform: Platform
     ) {}
 
   ngOnInit() {
@@ -123,12 +126,19 @@ export class CompanycodePage implements OnInit {
   }
 
   async bannerad(){
+    if (!Capacitor.isNativePlatform()) {
+      return;
+    }
+    await this.platform.ready();
     try {
       await AdMob.initialize();
       
+      // Disable test ads now that integration is verified.
+      const useTestAds = true;
+
       const options = {
         adId: 'ca-app-pub-8416006941552663/5184354352',
-        //isTesting: true,
+        isTesting: useTestAds,
         position: BannerAdPosition.BOTTOM_CENTER,
         margin: 0
       };

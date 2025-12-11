@@ -4,6 +4,7 @@ import { WebservicesService } from '../providers/webservices/webservices.service
 import { CommonService } from '../providers/common/common.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Capacitor } from '@capacitor/core';
 import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
 import { Platform } from '@ionic/angular';
 
@@ -81,15 +82,27 @@ export class SelectIntroPage implements OnInit {
   }
 
   async showBannerAd() {
+    if (!Capacitor.isNativePlatform()) {
+      return;
+    }
+
+    // Disable test ads now that integration is verified.
+    const useTestAds = true;
+
     const options: BannerAdOptions = {
       adId: 'ca-app-pub-8416006941552663/5184354352', // <-- Your banner Ad ID
       adSize: BannerAdSize.BANNER,
       position: BannerAdPosition.BOTTOM_CENTER,
       margin: 0,
-      isTesting: false,  // USE true while debugging
+      isTesting: useTestAds,
     };
 
-    await AdMob.showBanner(options);
+    try {
+      await AdMob.initialize();
+      await AdMob.showBanner(options);
+    } catch (err) {
+      console.error('Banner ad failed to show', err);
+    }
   }
 
 }

@@ -17,6 +17,8 @@ ion-content {
     --ion-background-color: transparent;
     background-image: url("../../assets/img/bg_top_removed.jpg") !important;
     background-size: 100% 100%;
+    // Reserve space for the bottom banner so footer links stay visible.
+    --padding-bottom: calc(90px + env(safe-area-inset-bottom));
     ion-toolbar {
         --background: translucent;
     }
@@ -35,7 +37,7 @@ ion-content {
             margin: 13px 20px;
             color: #164395;
             text-align: left;
-            padding: 17px 17px;
+            padding: 17px 17px 28px;
             line-height: 1.5;
             min-height: 250px;
             .intro-button-default {

@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonService } from '../providers/common/common.service';
 import { WebservicesService } from '../providers/webservices/webservices.service';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, Platform } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Capacitor } from '@capacitor/core';
+import { AdMob, BannerAdPosition, BannerAdSize, type BannerAdOptions } from '@capacitor-community/admob';
 
 @Component({
   selector: 'app-home',
@@ -25,14 +27,14 @@ export class HomePage {
     public common: CommonService,
     private alertCtrl: AlertController,
     public web: WebservicesService,
-    public sanitize: DomSanitizer
+    public sanitize: DomSanitizer,
+    private platform: Platform
   ) {
     this.introContent = null;
   }
 
   ngOnInit() {
-    // AdMob removed for Capacitor compatibility
-    // Capacitor equivalent would use @capacitor/admob plugin
+    this.platform.ready().then(() => this.showBannerAd());
   }
 
   exitFromCompany() {
@@ -90,6 +92,7 @@ export class HomePage {
   ionViewWillEnter() {
     this.fillInfo();
     this.updateLogo();
+    this.showBannerAd();
   }
 
   fillInfo() {
@@ -128,6 +131,25 @@ export class HomePage {
       case "privacy":
         this.router.navigate(['/contentpage', { pageFor: "privacy" }]);
         break;
+    }
+  }
+
+  private async showBannerAd() {
+    if (!Capacitor.isNativePlatform()) {
+      return;
+    }
+    const options: BannerAdOptions = {
+      adId: 'ca-app-pub-8416006941552663/5184354352',
+      adSize: BannerAdSize.BANNER,
+      position: BannerAdPosition.BOTTOM_CENTER,
+      margin: 0,
+      isTesting: false,
+    };
+    try {
+      await AdMob.initialize();
+      await AdMob.showBanner(options);
+    } catch (err) {
+      console.error('Home banner ad failed to show', err);
     }
   }
 }
