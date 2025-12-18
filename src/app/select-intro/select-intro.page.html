@@ -32,8 +32,6 @@
                 <br/>
             </ion-button>
             <div class="custom" [innerHTML]="sanitize.bypassSecurityTrustHtml(introContent.section_content)"></div>
-            <!-- <a class="content-link" style="margin-left: 10%;" (click)="goToOtherContentPage('privacy-master')">Privacy Policy</a>
-            <a class="content-link" style="margin-left:10px" (click)="goToOtherContentPage('terms-master')">Terms and Conditions</a> -->
             <div class="text-center">
                 <a class="content-link" (click)="goToOtherContentPage('privacy-master')">Privacy Policy</a>
                 <a class="content-link" style="margin-left:10px" (click)="goToOtherContentPage('terms-master')">Terms and Conditions</a>

@@ -129,7 +129,7 @@ export class SurveyformPage implements OnInit {
       console.error('Survey form banner ad failed to show', err);
     }
   }
-  
+
   loadFormData() {
     this.formBuilder = [];
     let company = localStorage.getItem("surveyCompanyCodeLocal");
@@ -174,32 +174,32 @@ export class SurveyformPage implements OnInit {
           console.log(this.formBuilder, " this.formBuilder");
 
           var self = this;
-          setTimeout(function() {
+          setTimeout(function () {
             var subSec = document.getElementsByClassName("formSubSection");
             if (subSec != undefined) {
               for (let k = 0; k < subSec.length; k++) {
-                let elemE = (<HTMLElement> subSec[k]).getElementsByClassName("subsecQuestionContainer")[0];
-                let elemEHead = (<HTMLElement> subSec[k]).getElementsByClassName("formSubHead")[0];
-                let elemEColRight = (<HTMLElement> elemEHead).getElementsByClassName("col-right")[0];
-                let elemEIconSwitcher = (<HTMLElement> elemEColRight).getElementsByClassName("chevron-icon")[0];
+                let elemE = (<HTMLElement>subSec[k]).getElementsByClassName("subsecQuestionContainer")[0];
+                let elemEHead = (<HTMLElement>subSec[k]).getElementsByClassName("formSubHead")[0];
+                let elemEColRight = (<HTMLElement>elemEHead).getElementsByClassName("col-right")[0];
+                let elemEIconSwitcher = (<HTMLElement>elemEColRight).getElementsByClassName("chevron-icon")[0];
                 elemEIconSwitcher.classList.remove("expand");
-                (<HTMLElement> elemE).style.display = "none";
-                (<HTMLElement> elemEHead).addEventListener("click", (e) => {
+                (<HTMLElement>elemE).style.display = "none";
+                (<HTMLElement>elemEHead).addEventListener("click", (e) => {
                   let elll = e.currentTarget as HTMLElement;
                   let elll2 = elll.parentElement;
                   if (elll2) {
                     let elll3 = elll2.getElementsByClassName("subsecQuestionContainer")[0];
-                    let ellEHead = (<HTMLElement> elll2).getElementsByClassName("formSubHead")[0];
-                    let ellEColRight = (<HTMLElement> ellEHead).getElementsByClassName("col-right")[0];
-                    let ellEIconSwitcher = (<HTMLElement> ellEColRight).getElementsByClassName("chevron-icon")[0];
-                    let findOpenOrClose = (<HTMLElement> elll3).style.display;
+                    let ellEHead = (<HTMLElement>elll2).getElementsByClassName("formSubHead")[0];
+                    let ellEColRight = (<HTMLElement>ellEHead).getElementsByClassName("col-right")[0];
+                    let ellEIconSwitcher = (<HTMLElement>ellEColRight).getElementsByClassName("chevron-icon")[0];
+                    let findOpenOrClose = (<HTMLElement>elll3).style.display;
                     if (findOpenOrClose != "none") {
                       ellEIconSwitcher.classList.remove("expand");
-                      (<HTMLElement> elll3).style.display = "none";
+                      (<HTMLElement>elll3).style.display = "none";
                     } else {
                       ellEIconSwitcher.classList.add("expand");
-                      (<HTMLElement> elll3).style.display = "block";
-                      let yOffset = (<HTMLElement> elll).offsetTop;
+                      (<HTMLElement>elll3).style.display = "block";
+                      let yOffset = (<HTMLElement>elll).offsetTop;
                       self.content.scrollToPoint(0, yOffset - 10, 700);
                     }
                   }
@@ -289,9 +289,8 @@ export class SurveyformPage implements OnInit {
             <div class="formText">
                 <ion-item class="item-background-color">
                     <ion-label></ion-label>
-                    <ion-textarea rows="2" cols="20" [(ngModel)]="tForm.adminCmd" name="formData[${
-        this.getLoopVal(i, j)
-      }]" readonly></ion-textarea>
+                    <ion-textarea rows="2" cols="20" [(ngModel)]="tForm.adminCmd" name="formData[${this.getLoopVal(i, j)
+        }]" readonly></ion-textarea>
                 </ion-item>
             </div>
         `;
@@ -422,7 +421,7 @@ export class SurveyformPage implements OnInit {
     }
     let navCtrlThis = this.navCtrl;
     let routerThis = this.router;
-    setTimeout(function() {
+    setTimeout(function () {
       navCtrlThis.setDirection("root");
       routerThis.navigateByUrl("/home", { skipLocationChange: true });
     }, 500);
@@ -471,32 +470,50 @@ export class SurveyformPage implements OnInit {
   }
 
   async actionSheetUpload(index: number) {
+    // Hide banner before opening ActionSheet
+    try {
+      await AdMob.hideBanner();
+    } catch (e) { }
+
     const actionSheet = await this.actionCtrl.create({
-      header: "Upload File",
+      header: 'Upload File',
       buttons: [
         {
-          text: "Camera",
-          icon: "camera-outline",
+          text: 'Camera',
+          icon: 'camera-outline',
           handler: () => {
             this.captureImageCamera(index);
           },
         },
         {
-          text: "Gallery",
-          icon: "image-outline",
+          text: 'Gallery',
+          icon: 'image-outline',
           handler: () => {
             this.captureImageGallery(index);
           },
         },
         {
-          text: "PDF File",
-          icon: "document-text-outline",
+          text: 'PDF File',
+          icon: 'document-text-outline',
           handler: () => {
             this.uploadPDF(index);
           },
-        }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          icon: 'close-outline',
+        },
       ],
     });
+
+    // Resume banner AFTER ActionSheet is closed
+    actionSheet.onDidDismiss().then(async () => {
+      try {
+        await AdMob.resumeBanner();
+      } catch (e) { }
+    });
+
     await actionSheet.present();
   }
 

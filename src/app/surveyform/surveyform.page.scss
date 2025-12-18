@@ -20,11 +20,28 @@ ion-toolbar {
 
 .survey-form {
     ion-button {
+        font-size: 12px;
         margin-top: -4px !important;
-        margin-right: 25px !important;
-        position: absolute;
-        right: -5px;
+        // margin-right: 25px !important;
+        // position: absolute;
+        // right: -5px;
         height: 45px !important;
+    }
+
+    .voice-btn {
+        // position: absolute;
+        // left: 10px;
+        // top: 15px;
+        color: #fff;
+        font-size: 12px;
+        line-height: 1.2;
+        text-align: left;
+        background: transparent;
+        box-shadow: none;
+        --background: transparent !important;
+        --color: #fff;
+        font-family: 'Roboto Condensed', sans-serif;
+        text-transform: none;
     }
 }
 
@@ -543,4 +560,8 @@ ion-button.login-btn.md.button.button-solid.ion-activatable.ion-focusable.hydrat
         font-size: 12px;
         color: var(--ion-color-medium);
     }
+}
+
+ion-content {
+    --padding-bottom: calc(90px + env(safe-area-inset-bottom));
 }

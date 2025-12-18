@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import {LoadingController, Platform, ToastController} from '@ionic/angular';
+import { AdMob } from '@capacitor-community/admob';
+import { LoadingController, Platform, ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -10,20 +11,20 @@ export class CommonService {
   profile: any;
 
   constructor(
-      public loadingController: LoadingController,
-      public toastController: ToastController,
-      public platform: Platform) {
+    public loadingController: LoadingController,
+    public toastController: ToastController,
+    public platform: Platform) {
     console.log('Hello CommonProvider Provider');
   }
 
-  validateEmail(email : string) {
+  validateEmail(email: string) {
     const re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return re.test(email);
   }
 
-  async presentLoading(time:number=17000, msg:string='Please wait..') {
+  async presentLoading(time: number = 17000, msg: string = 'Please wait..') {
     this.loading = await this.loadingController.create({
-      message:"Please wait ...",
+      message: "Please wait ...",
       duration: time
     });
     await this.loading.present();
@@ -31,7 +32,7 @@ export class CommonService {
 
   async closeLoading() {
     setTimeout(async () => {
-      try{
+      try {
         let topLoader = await this.loadingController.getTop();
         while (topLoader) {
           if (!(await topLoader.dismiss())) {
@@ -41,7 +42,7 @@ export class CommonService {
           topLoader = await this.loadingController.getTop();
         }
       }
-      catch(e){
+      catch (e) {
         console.log('problem with loader');
       }
 
@@ -50,11 +51,27 @@ export class CommonService {
     //await this.loading.dismiss();
   }
 
-  async presentToast(msg: any) {
+  async presentToast(message: string) {
+    try {
+      // Hide banner temporarily
+      await AdMob.hideBanner();
+    } catch (e) { }
+
     const toast = await this.toastController.create({
-      message: `${msg}`,
-      duration: 3000
+      message,
+      duration: 3000,
+      position: 'bottom',
     });
+
     toast.present();
+
+    // Show banner again after toast is finished
+    setTimeout(async () => {
+      try {
+        await AdMob.resumeBanner();
+      } catch (e) { }
+    }, 2500);
   }
+
+
 }
