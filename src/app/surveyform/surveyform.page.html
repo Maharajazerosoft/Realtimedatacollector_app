@@ -14,24 +14,29 @@
       <ion-icon class="font-size-1" name="close" slot="icon-only"></ion-icon>
     </ion-button>
   </div>
-  <div id="container" *ngIf="this.allowed_member > this.submitted_cnt">
+  <div id="container"  *ngIf="allowed_member === 'unlimited' || allowed_member > submitted_cnt">
     <h1>Survey Form</h1>
     <p style="color: white; font-size: 17px">
       (Questions with <span class="red">*</span> must be answered)
     </p>
     <div class="white-container" *ngIf="formBuilder.length>0">
+
+      <!-- ChatGPT link added here -->
+      <div class="chatgpt-link" style="margin-bottom: 15px; text-align: end;">
+        <a href="https://chat.openai.com" target="_blank"
+          style="text-decoration: underline; font-weight: 500; padding-right: 20px;">
+          Create Q/A using ChatGPT
+        </a>
+      </div>
+
       <div id="dynamicFormSurvey" class="surveyf-form">
-        <div
-          class="formSubSection"
-          *ngFor="let tSubSec of formBuilder; let i=index"
-        >
+        <div class="formSubSection" *ngFor="let tSubSec of formBuilder; let i=index">
           <div class="formSubHead">
             <div class="headForm">
               <div class="col-left">
                 <h3
                   [ngClass]="{'color_0': i%6==0, 'color_1': i%6==1, 'color_2': i%6==2, 'color_3': i%6==3, 'color_4': i%6==4, 'color_5': i%6==5}"
-                  class="subsec_title"
-                >
+                  class="subsec_title">
                   {{(i+1)+'. ' + tSubSec.subsecTitle}}
                 </h3>
               </div>
@@ -43,20 +48,12 @@
             <div class="subsec_desc">{{tSubSec.subsecDesc}}</div>
           </div>
           <div class="subsecQuestionContainer">
-            <div
-              class="formManager"
-              *ngFor="let tForm of tSubSec.qnData;let j = index;"
-            >
+            <div class="formManager" *ngFor="let tForm of tSubSec.qnData;let j = index;">
               <div class="label">
-                <div
-                  *ngIf="tForm.qnType !== 'admin_cmd'"
-                  style="min-width: 27px; margin-top: 8px"
-                >
+                <div *ngIf="tForm.qnType !== 'admin_cmd'" style="min-width: 27px; margin-top: 8px">
                   {{ j + 1 }}.
                 </div>
-                <div
-                  class="label"
-                  style="
+                <div class="label" style="
                     display: unset;
                     overflow-wrap: anywhere;
                     margin-top: 8px;
@@ -64,27 +61,17 @@
                     text-decoration: none;
                     font-family: Roboto Condensed;
                   "
-                  [innerHTML]="sanitize.bypassSecurityTrustHtml(questionConverter(tForm.qnText, tForm.qnRequired, j, tForm.qnType))"
-                ></div>
+                  [innerHTML]="sanitize.bypassSecurityTrustHtml(questionConverter(tForm.qnText, tForm.qnRequired, j, tForm.qnType))">
+                </div>
                 <span *ngIf="tForm.qnRequired==1" class="red">*</span>
               </div>
               <div *ngIf="tForm.qnType==='radio'" class="formRatio">
                 <div class="radio-group-container">
-                  <ion-radio-group
-                    [(ngModel)]="formData[getLoopVal(i, j)]"
-                    name="formData[{{getLoopVal(i, j)}}]"
-                  >
+                  <ion-radio-group [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]">
                     <div class="row-item-block-flex">
-                      <div
-                        class="col-item-block-flex"
-                        *ngFor="let radio of tForm.options"
-                      >
+                      <div class="col-item-block-flex" *ngFor="let radio of tForm.options">
                         <ion-item lines="none" class="item-background-color">
-                          <ion-radio
-                            mode="md"
-                            value="{{radio.optionValue}}"
-                            slot="start"
-                          ></ion-radio>
+                          <ion-radio mode="md" value="{{radio.optionValue}}" slot="start"></ion-radio>
                           <ion-label>{{radio.optionName}}</ion-label>
                         </ion-item>
                       </div>
@@ -95,106 +82,51 @@
               <div *ngIf="tForm.qnType==='select'" class="formSelect">
                 <ion-item class="item-background-color">
                   <ion-label [innerHTML]="tForm.qnText"></ion-label>
-                  <ion-select
-                    placeholder="Select"
-                    [(ngModel)]="formData[getLoopVal(i, j)]"
-                    name="formData[{{getLoopVal(i, j)}}]"
-                  >
-                    <ion-select-option
-                      value="{{select.optionValue}}"
-                      *ngFor="let select of tForm.options"
-                      >{{select.optionName}}</ion-select-option
-                    >
+                  <ion-select placeholder="Select" [(ngModel)]="formData[getLoopVal(i, j)]"
+                    name="formData[{{getLoopVal(i, j)}}]">
+                    <ion-select-option value="{{select.optionValue}}"
+                      *ngFor="let select of tForm.options">{{select.optionName}}</ion-select-option>
                   </ion-select>
                 </ion-item>
               </div>
-              <div
-                *ngIf="tForm.qnType==='address' && formCountrySwitch=='yes'"
-                class="formText"
-              >
-                <ion-input
-                  class="item-background-color"
-                  type="text"
-                  name="address"
-                  placeholder=""
-                  (click)="openAddress(getLoopVal(i, j))"
-                  [readonly]="true"
-                  [(ngModel)]="formData[getLoopVal(i, j)]"
-                  name="formData[{{getLoopVal(i, j)}}]"
-                ></ion-input>
+              <div *ngIf="tForm.qnType==='address' && formCountrySwitch=='yes'" class="formText">
+                <ion-input class="item-background-color" type="text" name="address" placeholder=""
+                  (click)="openAddress(getLoopVal(i, j))" [readonly]="true" [(ngModel)]="formData[getLoopVal(i, j)]"
+                  name="formData[{{getLoopVal(i, j)}}]"></ion-input>
               </div>
-              <div
-                *ngIf="tForm.qnType==='address' && formCountrySwitch=='no'"
-                class="formText"
-              >
-                <ion-input
-                  class="item-background-color"
-                  type="text"
-                  name="address"
-                  placeholder=""
-                  [(ngModel)]="formData[getLoopVal(i, j)]"
-                  name="formData[{{getLoopVal(i, j)}}]"
-                ></ion-input>
+              <div *ngIf="tForm.qnType==='address' && formCountrySwitch=='no'" class="formText">
+                <ion-input class="item-background-color" type="text" name="address" placeholder=""
+                  [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]"></ion-input>
               </div>
-              <div
-                *ngIf="tForm.qnType==='checkbox'"
-                class="formCheckbox"
-                [(ngModel)]="formData[getLoopVal(i, j)]"
-                name="formData[{{getLoopVal(i, j)}}]"
-              >
+              <div *ngIf="tForm.qnType==='checkbox'" class="formCheckbox" [(ngModel)]="formData[getLoopVal(i, j)]"
+                name="formData[{{getLoopVal(i, j)}}]">
                 <ion-item class="item-background-color">
                   <ion-label [innerHTML]="tForm.qnText"></ion-label>
-                  <ion-select
-                    [(ngModel)]="formData[getLoopVal(i, j)]"
-                    name="formData[{{getLoopVal(i, j)}}]"
-                    multiple="true"
-                    placeholder="Select"
-                  >
-                    <ion-select-option
-                      value="{{select.optionValue}}"
-                      *ngFor="let select of tForm.options"
-                      >{{select.optionName}}</ion-select-option
-                    >
+                  <ion-select [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]"
+                    multiple="true" placeholder="Select">
+                    <ion-select-option value="{{select.optionValue}}"
+                      *ngFor="let select of tForm.options">{{select.optionName}}</ion-select-option>
                   </ion-select>
                 </ion-item>
               </div>
               <div *ngIf="tForm.qnType==='text'" class="formText">
-                <ion-input
-                  class="item-background-color"
-                  type="text"
-                  [(ngModel)]="formData[getLoopVal(i, j)]"
-                  name="formData[{{getLoopVal(i, j)}}]"
-                ></ion-input>
+                <ion-input class="item-background-color" type="text" [(ngModel)]="formData[getLoopVal(i, j)]"
+                  name="formData[{{getLoopVal(i, j)}}]"></ion-input>
               </div>
               <div *ngIf="tForm.qnType==='textArea'" class="formText">
                 <ion-item class="item-background-color">
                   <ion-label></ion-label>
-                  <ion-textarea
-                    rows="2"
-                    cols="20"
-                    [(ngModel)]="formData[getLoopVal(i, j)]"
-                    name="formData[{{getLoopVal(i, j)}}]"
-                  ></ion-textarea>
+                  <ion-textarea rows="2" cols="20" [(ngModel)]="formData[getLoopVal(i, j)]"
+                    name="formData[{{getLoopVal(i, j)}}]"></ion-textarea>
                 </ion-item>
               </div>
               <div *ngIf="tForm.qnType==='country'" class="formText">
-                <ion-radio-group
-                  [(ngModel)]="formData[getLoopVal(i, j)]"
-                  name="formData[{{getLoopVal(i, j)}}]"
-                  (ionChange)="countryValue($event)"
-                  class="item-background-color"
-                >
+                <ion-radio-group [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]"
+                  (ionChange)="countryValue($event)" class="item-background-color">
                   <div class="row-item-block-flex">
-                    <div
-                      class="col-item-block-flex"
-                      *ngFor="let radio of tForm.options"
-                    >
+                    <div class="col-item-block-flex" *ngFor="let radio of tForm.options">
                       <ion-item lines="none">
-                        <ion-radio
-                          mode="md"
-                          value="{{radio.optionValue}}"
-                          slot="start"
-                        ></ion-radio>
+                        <ion-radio mode="md" value="{{radio.optionValue}}" slot="start"></ion-radio>
                         <ion-label>{{radio.optionName}}</ion-label>
                       </ion-item>
                     </div>
@@ -204,51 +136,27 @@
               <div *ngIf="tForm.qnType==='admin_cmd'" class="formText">
                 <ion-item class="item-background-color">
                   <ion-label></ion-label>
-                  <ion-textarea
-                    rows="2"
-                    cols="20"
-                    [(ngModel)]="formData[getLoopVal(i, j)]"
-                    [name]="'formData_' + getLoopVal(i, j)"
-                  ></ion-textarea>
+                  <ion-textarea rows="2" cols="20" [(ngModel)]="formData[getLoopVal(i, j)]"
+                    [name]="'formData_' + getLoopVal(i, j)"></ion-textarea>
                 </ion-item>
               </div>
               <div *ngIf="tForm.qnType==='image'" class="formText">
                 <ion-item class="item-background-color">
-                  <div
-                    *ngIf="formData[getLoopVal(i, j)] && getFileType(formData[getLoopVal(i, j)]) === 'image'"
-                  >
-                    <img
-                      class="upload-image"
-                      [src]="formData[getLoopVal(i, j)]"
-                      alt="Uploaded Image"
-                    />
+                  <div *ngIf="formData[getLoopVal(i, j)] && getFileType(formData[getLoopVal(i, j)]) === 'image'">
+                    <img class="upload-image" [src]="formData[getLoopVal(i, j)]" alt="Uploaded Image" />
                   </div>
 
-                  <div
-                    *ngIf="formData[getLoopVal(i, j)] && getFileType(formData[getLoopVal(i, j)]) === 'pdf'"
-                    class="pdf-preview"
-                  >
-                    <ion-icon
-                      name="document-text-outline"
-                      size="large"
-                      color="primary"
-                    ></ion-icon>
+                  <div *ngIf="formData[getLoopVal(i, j)] && getFileType(formData[getLoopVal(i, j)]) === 'pdf'"
+                    class="pdf-preview">
+                    <ion-icon name="document-text-outline" size="large" color="primary"></ion-icon>
                     <span>PDF Document</span>
                   </div>
 
-                  <ion-input
-                    type="text"
-                    placeholder="Upload Image"
-                    readonly
-                    [(ngModel)]="formData[getLoopVal(i, j)]"
-                  ></ion-input>
+                  <ion-input type="text" placeholder="Upload Image" readonly
+                    [(ngModel)]="formData[getLoopVal(i, j)]"></ion-input>
 
-                  <ion-icon
-                    color="primary"
-                    class="ion-padding-start"
-                    name="cloud-upload-outline"
-                    (click)="actionSheetUpload(getLoopVal(i, j))"
-                  ></ion-icon>
+                  <ion-icon color="primary" class="ion-padding-start" name="cloud-upload-outline"
+                    (click)="actionSheetUpload(getLoopVal(i, j))"></ion-icon>
                 </ion-item>
               </div>
             </div>
@@ -258,48 +166,28 @@
       <div>
         <div class="captcha-container1">
           <p class="captcha">{{ formattedCaptcha }}</p>
-          <img
-            src="https://dynamiccoupons.com/images/refresh4.png"
-            (click)="refreshCaptcha()"
-            alt="Refresh CAPTCHA"
-            class="refresh-icon"
-            style="
+          <img src="https://dynamiccoupons.com/images/refresh4.png" (click)="refreshCaptcha()" alt="Refresh CAPTCHA"
+            class="refresh-icon" style="
               cursor: pointer;
               width: 24px;
               height: 24px;
               margin-left: 20px;
-            "
-          />
+            " />
         </div>
-        <ion-input
-          class="captchinput"
-          style="padding-left: 12px"
-          name="captcha"
-          type="text"
-          [(ngModel)]="captchaInput"
-          placeholder="Enter CAPTCHA"
-          required
-        ></ion-input>
+        <ion-input class="captchinput" style="padding-left: 12px" name="captcha" type="text" [(ngModel)]="captchaInput"
+          placeholder="Enter CAPTCHA" required></ion-input>
         <p *ngIf="isCaptchaInvalid">Invalid CAPTCHA, please try again.</p>
       </div>
       <div class="surveyf-buttons">
-        <ion-button
-          class="surveyf-btn"
-          (click)="onButtonClick('submit',formData)"
-          >Submit to Save</ion-button
-        >
+        <ion-button class="surveyf-btn" (click)="onButtonClick('submit',formData)">Submit to Save</ion-button>
       </div>
     </div>
-    <div
-      class="surveyf-form white-container"
-      *ngIf="!formBuilder"
-      style="
+    <div class="surveyf-form white-container" *ngIf="!formBuilder" style="
         min-height: 80vh;
         display: flex;
         align-items: center;
         padding: 1rem;
-      "
-    >
+      ">
       <p>No questions available now, please contact your company.</p>
     </div>
     <div class="white-container" *ngIf="formBuilder.length==0 && formBuilder">
@@ -307,20 +195,11 @@
         <div class="formSubHead">
           <div class="headForm">
             <div class="col-left left-side-heading">
-              <ion-skeleton-text
-                animated
-                style="width: 90%"
-              ></ion-skeleton-text>
-              <ion-skeleton-text
-                animated
-                style="width: 35%"
-              ></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 35%"></ion-skeleton-text>
             </div>
             <div class="col-right right-side-heading">
-              <ion-skeleton-text
-                animated
-                style="width: 22px; height: 22px"
-              ></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 22px; height: 22px"></ion-skeleton-text>
             </div>
             <div class="col-clear"></div>
           </div>
@@ -335,20 +214,11 @@
         <div class="formSubHead">
           <div class="headForm">
             <div class="col-left left-side-heading">
-              <ion-skeleton-text
-                animated
-                style="width: 90%"
-              ></ion-skeleton-text>
-              <ion-skeleton-text
-                animated
-                style="width: 35%"
-              ></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 35%"></ion-skeleton-text>
             </div>
             <div class="col-right right-side-heading">
-              <ion-skeleton-text
-                animated
-                style="width: 22px; height: 22px"
-              ></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 22px; height: 22px"></ion-skeleton-text>
             </div>
             <div class="col-clear"></div>
           </div>
@@ -363,20 +233,11 @@
         <div class="formSubHead">
           <div class="headForm">
             <div class="col-left left-side-heading">
-              <ion-skeleton-text
-                animated
-                style="width: 90%"
-              ></ion-skeleton-text>
-              <ion-skeleton-text
-                animated
-                style="width: 35%"
-              ></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 35%"></ion-skeleton-text>
             </div>
             <div class="col-right right-side-heading">
-              <ion-skeleton-text
-                animated
-                style="width: 22px; height: 22px"
-              ></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 22px; height: 22px"></ion-skeleton-text>
             </div>
             <div class="col-clear"></div>
           </div>
@@ -388,16 +249,11 @@
         </div>
       </div>
       <div class="ion-padding custom-skeleton surveyform-button-default">
-        <ion-skeleton-text
-          animated
-          style="width: 190px; height: 50px"
-        ></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 190px; height: 50px"></ion-skeleton-text>
       </div>
     </div>
   </div>
-  <div
-    *ngIf="this.allowed_member <= this.submitted_cnt"
-    style="
+  <div *ngIf="allowed_member !== 'unlimited' && allowed_member <= submitted_cnt" style="
       background: #fff3cd;
       border: 1px solid #ffeeba;
       color: #856404;
@@ -407,8 +263,7 @@
       align-items: center;
       gap: 10px;
       margin: 15px 18px;
-    "
-  >
+    ">
     <!-- Info Icon -->
     <span style="font-size: 22px">&#9888;</span>
     <!-- Message -->

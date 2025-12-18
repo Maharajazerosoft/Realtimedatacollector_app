@@ -134,7 +134,7 @@ export class CompanycodePage implements OnInit {
       await AdMob.initialize();
 
       // Disable test ads now that integration is verified.
-      const useTestAds = true;
+      const useTestAds = false;
 
       const options = {
         adId: 'ca-app-pub-8416006941552663/5184354352',

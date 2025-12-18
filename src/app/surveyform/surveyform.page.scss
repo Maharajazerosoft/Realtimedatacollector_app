@@ -544,3 +544,7 @@ ion-button.login-btn.md.button.button-solid.ion-activatable.ion-focusable.hydrat
         color: var(--ion-color-medium);
     }
 }
+
+ion-content {
+    --padding-bottom: calc(90px + env(safe-area-inset-bottom));
+}

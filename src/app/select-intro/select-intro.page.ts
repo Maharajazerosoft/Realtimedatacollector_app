@@ -86,7 +86,7 @@ export class SelectIntroPage implements OnInit {
     }
 
     // Disable test ads now that integration is verified.
-    const useTestAds = true;
+    const useTestAds = false;
 
     const options: BannerAdOptions = {
       adId: 'ca-app-pub-8416006941552663/5184354352', // <-- Your banner Ad ID
