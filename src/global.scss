@@ -196,3 +196,31 @@ html {
     --ion-safe-area-left: env(safe-area-inset-left);
     --ion-safe-area-right: env(safe-area-inset-right);
 }
+
+ion-content {
+    &.ios {
+        --ion-safe-area-bottom: calc(env(safe-area-inset-bottom) + 50px);
+
+        // This creates a white background behind the banner
+        &::after {
+            content: '';
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: calc(1px + env(safe-area-inset-bottom));
+            background: white;
+            z-index: 9998; // Just below the banner (banner is usually 9999)
+        }
+    }
+}
+
+ion-content > .banner-ad {
+    z-index: 9999;
+    position: relative;
+  }
+  // If you have a footer, make sure it's above our white background
+  ion-footer {
+    z-index: 10000;
+    background: white; // Match your footer background
+  }
