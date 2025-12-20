@@ -5,7 +5,6 @@ ion-toolbar {
     --ion-toolbar-background: transparent;
     text-align: center;
     padding: 8px 5px 5px 5px !important;
-
     //height:68px;
     img {
         // height: 45px;
@@ -20,30 +19,11 @@ ion-content {
     background-size: 100% 100%;
     // Reserve space for the bottom banner so footer links stay visible.
     --padding-bottom: calc(90px + env(safe-area-inset-bottom));
-
-    &.ios {
-        --ion-safe-area-bottom: calc(env(safe-area-inset-bottom) + 50px);
-
-        // This creates a white background behind the banner
-        &::after {
-            content: '';
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: calc(50px + env(safe-area-inset-bottom));
-            background: white;
-            z-index: 9998; // Just below the banner (banner is usually 9999)
-        }
-    }
-
     ion-toolbar {
         --background: translucent;
     }
-
     #container {
         text-align: center;
-
         h1 {
             font-family: "Roboto Condensed", sans-serif;
             color: white;
@@ -51,7 +31,6 @@ ion-content {
             font-size: 28px;
             font-weight: 700;
         }
-
         .white-container {
             background: white;
             border-radius: 10px;
@@ -61,21 +40,17 @@ ion-content {
             padding: 17px 17px 28px;
             line-height: 1.5;
             min-height: 250px;
-
             .intro-button-default {
                 text-align: center;
-
                 ion-skeleton-text {
                     display: inline-block;
                 }
             }
-
             .intro-content-skeleton {
                 ion-skeleton-text {
                     margin-bottom: 10px;
                 }
             }
-
             ion-button {
                 display: block;
                 margin: 0 auto;
@@ -86,7 +61,6 @@ ion-content {
                 text-transform: inherit;
                 border-radius: 4px;
             }
-
             ion-button.create-acc-btn {
                 background-color: #1ac1ee;
                 --ion-color-primary: transparent;
@@ -95,7 +69,6 @@ ion-content {
                 margin: 0px auto 14px auto;
                 // max-width: 230px;
             }
-
             ion-button.type-in {
                 // max-width: unset;
                 white-space: normal;
@@ -106,7 +79,6 @@ ion-content {
                 background: rgb(210, 35, 250);
                 background: linear-gradient(180deg, rgba(210, 35, 250, 1) 0%, rgba(142, 70, 223, 1) 100%);
             }
-
             ion-button.type-ins {
                 // max-width: unset;
                 white-space: normal;
@@ -117,7 +89,6 @@ ion-content {
                 background: rgb(210, 35, 250);
                 background: linear-gradient(180deg, #cd43ec 0%, #b37cf0 100%)
             }
-
             ion-button.login-btn {
                 background-color: #8d66a9;
                 --ion-color-primary: transparent;
@@ -127,33 +98,20 @@ ion-content {
                 margin-bottom: 32px;
             }
         }
-
         strong {
             font-size: 22px;
             line-height: 26px;
         }
-
         p {
             font-size: 18px;
             line-height: 18px;
             color: #8c8c8c;
             margin: 0;
         }
-
         a {
             text-decoration: none;
         }
     }
-}
-
-ion-content > .banner-ad {
-  z-index: 9999;
-  position: relative;
-}
-// If you have a footer, make sure it's above our white background
-ion-footer {
-  z-index: 10000;
-  background: white; // Match your footer background
 }
 
 .first_ln {
