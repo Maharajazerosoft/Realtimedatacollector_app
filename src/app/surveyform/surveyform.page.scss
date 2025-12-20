@@ -20,11 +20,22 @@ ion-toolbar {
 
 .survey-form {
     ion-button {
-        margin-top: -4px !important;
-        margin-right: 25px !important;
-        position: absolute;
-        right: -5px;
+        font-size: 12px;
+        margin-top: -4px !important;    
         height: 45px !important;
+    }
+
+    .voice-btn {
+        color: #fff;
+        font-size: 12px;
+        line-height: 1.2;
+        text-align: left;
+        background: transparent;
+        box-shadow: none;
+        --background: transparent !important;
+        --color: #fff;
+        font-family: 'Roboto Condensed', sans-serif;
+        text-transform: none;
     }
 }
 
