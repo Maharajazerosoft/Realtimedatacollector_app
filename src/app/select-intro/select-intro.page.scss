@@ -20,23 +20,6 @@ ion-content {
     background-size: 100% 100%;
     // Reserve space for the bottom banner so footer links stay visible.
     --padding-bottom: calc(90px + env(safe-area-inset-bottom));
-
-    &.ios {
-        --ion-safe-area-bottom: calc(env(safe-area-inset-bottom) + 50px);
-
-        // This creates a white background behind the banner
-        &::after {
-            content: '';
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: calc(50px + env(safe-area-inset-bottom));
-            background: white;
-            z-index: 9998; // Just below the banner (banner is usually 9999)
-        }
-    }
-
     ion-toolbar {
         --background: translucent;
     }
@@ -144,16 +127,6 @@ ion-content {
             text-decoration: none;
         }
     }
-}
-
-ion-content > .banner-ad {
-  z-index: 9999;
-  position: relative;
-}
-// If you have a footer, make sure it's above our white background
-ion-footer {
-  z-index: 10000;
-  background: white; // Match your footer background
 }
 
 .first_ln {
