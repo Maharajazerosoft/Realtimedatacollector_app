@@ -90,7 +90,7 @@ export class SelectIntroPage implements OnInit {
 
     const options: BannerAdOptions = {
       adId: 'ca-app-pub-8416006941552663/5184354352', // <-- Your banner Ad ID
-      adSize: BannerAdSize.BANNER,
+      adSize: BannerAdSize.ADAPTIVE_BANNER,
       position: BannerAdPosition.BOTTOM_CENTER,
       margin: 0,
       isTesting: useTestAds,
