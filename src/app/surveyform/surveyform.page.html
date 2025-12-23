@@ -1,15 +1,33 @@
 <ion-header [translucent]="true" class="survey-form">
   <ion-toolbar>
-    <!-- New left-side button -->
-    <ion-button color="primary" slot="start" class="voice-btn">
-      Supports 🎙️<br />
-      Voice-to-Text
-    </ion-button>
-    <img *ngIf="!logoImage || logoImage==''" src="../../assets/img/logo.png" />
-    <img *ngIf="logoImage && logoImage!=''" [src]="logoImage" />
-    <ion-button color="primary" slot="end" (click)="LogoutApp()">
-      {{exitBtnText}}
-    </ion-button>
+    <div class="header-container">
+      <!-- Left Section - Microphone Button with Text -->
+      <div class="header-section">
+        <div class="mic-text-container">
+          <ion-button fill="clear" class="mic-button">
+            <div class="text-lines">
+              <div class="line-1"><ion-icon name="mic" class="mic-icon"></ion-icon> Tap the</div>
+              <div class="line-2">Keyboard Mic</div>
+            </div>
+          </ion-button>
+        </div>
+      </div>
+
+      <!-- Middle Section - Logo -->
+      <div class="header-section">
+        <div class="logo-container">
+          <img *ngIf="!logoImage" src="../../assets/img/logo.png" />
+          <img *ngIf="logoImage" [src]="logoImage" />
+        </div>
+      </div>
+
+      <!-- Right Section - Home Button -->
+      <div class="header-section">
+        <ion-button color="primary" (click)="LogoutApp()" class="home_btn">
+          {{ exitBtnText }}
+        </ion-button>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true" class="survey-form-page">

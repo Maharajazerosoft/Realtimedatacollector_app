@@ -85,23 +85,25 @@ export class SelectIntroPage implements OnInit {
       return;
     }
 
-    // Disable test ads now that integration is verified.
-    const useTestAds = false;
-
-    const options: BannerAdOptions = {
-      adId: 'ca-app-pub-8416006941552663/5184354352', // <-- Your banner Ad ID
-      adSize: BannerAdSize.BANNER,
-      position: BannerAdPosition.BOTTOM_CENTER,
-      margin: 0,
-      isTesting: useTestAds,
-    };
+    await this.platform.ready();
 
     try {
       await AdMob.initialize();
+
+      const options: BannerAdOptions = {
+        adId: 'ca-app-pub-8416006941552663/5184354352',
+        adSize: BannerAdSize.ADAPTIVE_BANNER,
+        position: BannerAdPosition.BOTTOM_CENTER,
+        margin: 0,
+        isTesting: false,
+      };
+
       await AdMob.showBanner(options);
+      console.log('Home banner ad loaded');
     } catch (err) {
-      console.error('Banner ad failed to show', err);
+      console.error('Home banner ad error:', err);
     }
   }
+
 
 }

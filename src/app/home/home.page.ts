@@ -134,22 +134,29 @@ export class HomePage {
     }
   }
 
-  private async showBannerAd() {
+  async showBannerAd() {
     if (!Capacitor.isNativePlatform()) {
       return;
     }
-    const options: BannerAdOptions = {
-      adId: 'ca-app-pub-8416006941552663/5184354352',
-      adSize: BannerAdSize.BANNER,
-      position: BannerAdPosition.BOTTOM_CENTER,
-      margin: 0,
-      isTesting: false,
-    };
+
+    await this.platform.ready();
+
     try {
       await AdMob.initialize();
+
+      const options: BannerAdOptions = {
+        adId: 'ca-app-pub-8416006941552663/5184354352',
+        adSize: BannerAdSize.ADAPTIVE_BANNER,
+        position: BannerAdPosition.BOTTOM_CENTER,
+        margin: 0,
+        isTesting: false,
+      };
+
       await AdMob.showBanner(options);
+      console.log('Home banner ad loaded');
     } catch (err) {
-      console.error('Home banner ad failed to show', err);
+      console.error('Home banner ad error:', err);
     }
   }
+
 }
