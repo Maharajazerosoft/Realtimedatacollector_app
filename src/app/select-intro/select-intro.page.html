@@ -1,42 +1,30 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
-        <img *ngIf="!logoImage || logoImage==''" src="../../assets/img/logo.png" />
-        <img *ngIf="logoImage && logoImage!=''" [src]="logoImage" />
+        <img *ngIf="!logoImage || logoImage==''" src="../../assets/img/logo.png" alt="Logo" />
+        <img *ngIf="logoImage && logoImage!=''" [src]="logoImage" alt="Logo" />
     </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true">
     <div id="container">
         <h1>{{introContent.section_title}}</h1>
         <div class="white-container" *ngIf="!fetchingStatus">
             <ion-button fill="clear" [routerLink]="['/companycode']" class="create-acc-btn type-in">
                 <div>
-                    <p class="first_ln">
-                        <ion-label>Begin Taking Survey:</ion-label>
-                    </p>
-                    <p class="second_ln">
-                        <ion-label>Type in Access Code Provided by the Account Holder</ion-label>
-                    </p>
+                    <p class="first_ln">Begin Taking Survey:</p>
+                    <p class="second_ln">Type in Access Code Provided by the Account Holder</p>
                 </div>
-                <br/>
             </ion-button>
             <ion-button fill="clear" [routerLink]="['/signup']" class="create-acc-btn type-ins">
                 <div>
-                    <p class="first_ln">
-                        <ion-label>Create Survey and Gather Data:</ion-label>
-                    </p>
-                    <p class="second_ln">
-                        <ion-label>Click to Start Your Free Admin Account and Survey Builder</ion-label>
-                    </p>
+                    <p class="first_ln">Create Survey and Gather Data:</p>
+                    <p class="second_ln">Click to Start Your Free Admin Account and Survey Builder</p>
                 </div>
-                <br/>
             </ion-button>
             <div class="custom" [innerHTML]="sanitize.bypassSecurityTrustHtml(introContent.section_content)"></div>
             <div class="text-center">
                 <a class="content-link" (click)="goToOtherContentPage('privacy-master')">Privacy Policy</a>
                 <a class="content-link" style="margin-left:10px" (click)="goToOtherContentPage('terms-master')">Terms and Conditions</a>
             </div>
-
         </div>
         <div class="white-container" *ngIf="fetchingStatus">
             <div class="ion-padding custom-skeleton intro-button-default">
