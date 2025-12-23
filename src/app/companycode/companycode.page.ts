@@ -4,7 +4,7 @@ import { WebservicesService } from "../providers/webservices/webservices.service
 import { Router } from "@angular/router";
 import { Platform } from "@ionic/angular";
 import { Capacitor } from "@capacitor/core";
-import { AdMob, BannerAdPosition } from '@capacitor-community/admob';
+import { AdMob, BannerAdPosition, BannerAdSize, type BannerAdOptions } from '@capacitor-community/admob';
 
 @Component({
   selector: "app-companycode",
@@ -136,10 +136,11 @@ export class CompanycodePage implements OnInit {
       // Disable test ads now that integration is verified.
       const useTestAds = false;
 
-      const options = {
+      const options: BannerAdOptions = {
         adId: 'ca-app-pub-8416006941552663/5184354352',
-        isTesting: useTestAds,
+        adSize: BannerAdSize.ADAPTIVE_BANNER,
         position: BannerAdPosition.BOTTOM_CENTER,
+        isTesting: useTestAds,
         margin: 0
       };
       await AdMob.showBanner(options);
