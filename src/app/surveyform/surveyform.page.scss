@@ -637,4 +637,17 @@ ion-button.login-btn.md.button.button-solid.ion-activatable.ion-focusable.hydrat
 
 ion-content {
     --padding-bottom: calc(90px + env(safe-area-inset-bottom));
+    position: relative;
 }
+
+ion-content::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    background: white;
+    z-index: 1;
+    pointer-events: none; 
+  }

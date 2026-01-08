@@ -20,6 +20,7 @@ ion-content {
     background-size: 100% 100%;
     // Keep bottom content above the banner ad (test/production) + safe area.
     --padding-bottom: calc(90px + env(safe-area-inset-bottom));
+    position: relative;
 
     ion-toolbar {
         --background: translucent;
@@ -119,6 +120,18 @@ ion-content {
         }
     }
 }
+
+ion-content::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    background: white;
+    z-index: 1;
+    pointer-events: none; 
+  }
 
 .start_button {
     position: absolute;

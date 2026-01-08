@@ -15,6 +15,9 @@ const config: CapacitorConfig = {
       backgroundColor: "#ffffff",
       androidScaleType: "CENTER_CROP",
       showSpinner: false
+    },
+    Keyboard: {
+      resize: 'body'
     }
   }
 };
