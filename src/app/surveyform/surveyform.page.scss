@@ -63,7 +63,7 @@ ion-toolbar {
                 }
 
                 .line-2 {
-                    font-size: 12px;
+                    font-size: 11px;
                     font-weight: 500;
                 }
             }
@@ -636,6 +636,20 @@ ion-button.login-btn.md.button.button-solid.ion-activatable.ion-focusable.hydrat
 
 ion-content {
     --padding-bottom: calc(90px + env(safe-area-inset-bottom));
+    position: relative;
+}
+
+/* white bottom area */
+ion-content::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 70px; /* banner height */
+  background: #ffffff;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .surveyf-form span span {

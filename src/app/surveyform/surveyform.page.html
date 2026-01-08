@@ -96,7 +96,7 @@
               </div>
               <div *ngIf="tForm.qnType==='select'" class="formSelect">
                 <ion-item class="item-background-color">
-                  <ion-label [innerHTML]="tForm.qnText"></ion-label>
+                  <!-- <ion-label [innerHTML]="tForm.qnText"></ion-label> -->
                   <ion-select placeholder="Select" [(ngModel)]="formData[getLoopVal(i, j)]"
                     name="formData[{{getLoopVal(i, j)}}]">
                     <ion-select-option value="{{select.optionValue}}"
@@ -116,7 +116,7 @@
               <div *ngIf="tForm.qnType==='checkbox'" class="formCheckbox" [(ngModel)]="formData[getLoopVal(i, j)]"
                 name="formData[{{getLoopVal(i, j)}}]">
                 <ion-item class="item-background-color">
-                  <ion-label [innerHTML]="tForm.qnText"></ion-label>
+                  <!-- <ion-label [innerHTML]="tForm.qnText"></ion-label> -->
                   <ion-select [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]"
                     multiple="true" placeholder="Select">
                     <ion-select-option value="{{select.optionValue}}"
@@ -130,8 +130,8 @@
               </div>
               <div *ngIf="tForm.qnType==='textArea'" class="formText">
                 <ion-item class="item-background-color">
-                  <ion-label></ion-label>
-                  <ion-textarea rows="2" cols="20" [(ngModel)]="formData[getLoopVal(i, j)]"
+                  <!-- <ion-label></ion-label> -->
+                  <ion-textarea rows="2" class="full-width-textarea" [(ngModel)]="formData[getLoopVal(i, j)]"
                     name="formData[{{getLoopVal(i, j)}}]"></ion-textarea>
                 </ion-item>
               </div>
@@ -150,8 +150,8 @@
               </div>
               <div *ngIf="tForm.qnType==='admin_cmd'" class="formText">
                 <ion-item class="item-background-color">
-                  <ion-label></ion-label>
-                  <ion-textarea rows="2" cols="20" [(ngModel)]="formData[getLoopVal(i, j)]"
+                  <!-- <ion-label></ion-label> -->
+                  <ion-textarea rows="2" class="full-width-textarea" [(ngModel)]="formData[getLoopVal(i, j)]"
                     [name]="'formData_' + getLoopVal(i, j)"></ion-textarea>
                 </ion-item>
               </div>
