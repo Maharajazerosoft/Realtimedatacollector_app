@@ -149,7 +149,7 @@ export class HomePage {
         adSize: BannerAdSize.ADAPTIVE_BANNER,
         position: BannerAdPosition.BOTTOM_CENTER,
         margin: 0,
-        isTesting: false,
+        isTesting: true,
       };
 
       await AdMob.showBanner(options);
