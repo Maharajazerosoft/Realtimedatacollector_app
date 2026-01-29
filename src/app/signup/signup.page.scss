@@ -153,7 +153,9 @@ ion-button {
     margin-right: auto !important;
     background: #ffff !important;
     border-radius: 5px !important;
-    margin-bottom: 15px !important;
+    // margin-bottom: 15px !important;
+    margin-bottom: 5px !important;
+    margin-top: 5px !important;
     padding: 0px 4px !important;
     --placeholder-color: rgb(133, 132, 132) !important;
     --placeholder-font-family: "Roboto Condensed", sans-serif;
@@ -197,4 +199,8 @@ ion-input {
 
 ion-content {
     --padding-bottom: calc(90px + env(safe-area-inset-bottom));
+}
+.signin-input-label{
+        font-size: 16px;
+    color: #707cba;
 }

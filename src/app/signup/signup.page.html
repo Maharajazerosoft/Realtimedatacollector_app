@@ -22,11 +22,13 @@
       <form class="login-form mt-4" [formGroup]="signupform">
         <!-- Company Name -->
         <div class="pad">
+          <label class="signin-input-label">Company/Project Name:</label>
+
           <div class="input-container">
             <ion-input 
               type="text" 
               class="test" 
-              placeholder="Company Name" 
+              placeholder="Your company or project name goes here" 
               formControlName="cname"
             >
               <ion-icon name="sunny-outline" class="input-icon"></ion-icon>
@@ -43,11 +45,12 @@
 
         <!-- User Name -->
         <div class="pad">
+            <label class="signin-input-label">Username:</label>
           <div class="input-container">
             <ion-input 
               type="text" 
               class="test" 
-              placeholder="User Name" 
+              placeholder="Choose a memorable username." 
               formControlName="uname"
             >
               <ion-icon name="person-outline" class="input-icon"></ion-icon>
@@ -64,11 +67,12 @@
 
         <!-- Email -->
         <div class="pad">
+            <label class="signin-input-label">Email:</label>
           <div class="input-container">
             <ion-input 
               type="email" 
               class="test" 
-              placeholder="Email" 
+              placeholder="Gmail or major providers ensure delivery." 
               formControlName="email"
             >
               <ion-icon name="mail-outline" class="input-icon"></ion-icon>
@@ -90,11 +94,12 @@
 
         <!-- Password -->
         <div class="pad">
+            <label class="signin-input-label">Password:</label>
           <div class="input-container">
             <ion-input 
               [type]="showPassword ? 'text' : 'password'" 
               class="test" 
-              placeholder="Password" 
+              placeholder="Pick a secure password you can remember." 
               formControlName="password"
             >
             </ion-input>
@@ -116,11 +121,12 @@
         
         <!-- Confirm Password -->
         <div class="pad">
+            <label class="signin-input-label">Confirm Password:</label>
           <div class="input-container">
             <ion-input 
               [type]="showConfirmPassword ? 'text' : 'password'" 
               class="test" 
-              placeholder="Confirm Password" 
+              placeholder="Confirm password (must match password)" 
               formControlName="confirm"
             >  
             </ion-input>
@@ -141,25 +147,32 @@
         </div>
 
         <!-- Company Description -->
-        <div class="pad">
-          <div class="input-container">
-            <ion-input 
-              type="text" 
-              class="test" 
-              placeholder="Company Description" 
-              formControlName="desc"
-            >
-              <ion-icon name="document-text-outline" class="input-icon"></ion-icon>
-            </ion-input>
-          </div>
-          <div *ngIf="signupform.get('desc')?.errors">
-            <span
-              *ngIf="signupform.get('desc')?.touched && !signupform.get('desc')?.valid && !signupform.get('desc')?.value"
-              class="validate-errors pb-3 float-left">
-              Enter Company Description<br>
-            </span>
-          </div>
-        </div>
+     <!-- Social Media -->
+<div class="pad">
+  <label class="signin-input-label">
+    Social Media Links:
+  </label>
+
+  <div class="input-container">
+    <ion-input
+      type="url"
+      class="test"
+      placeholder="LinkedIn, Facebook, X or Instagram"
+      formControlName="social">
+      <ion-icon name="link-outline" class="input-icon"></ion-icon>
+    </ion-input>
+  </div>
+
+  <div
+    *ngIf="signupform.get('social')?.touched && signupform.get('social')?.errors">
+    <span
+      class="validate-errors pb-3 float-left"
+      *ngIf="signupform.get('social')?.errors?.['pattern']">
+      Enter a valid LinkedIn, Facebook, X, or Instagram link
+    </span>
+  </div>
+</div>
+
         
         <!-- Information Text -->
         <p style="font-size: 16px;color: #707cba;margin-left: 8px;">
