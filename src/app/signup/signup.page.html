@@ -25,8 +25,17 @@
           <label class="signin-input-label">Company/Project Name:</label>
 
           <div class="input-container">
+<<<<<<< HEAD
             <ion-input type="text" class="test" placeholder="Your company or project name goes here"
               formControlName="cname">
+=======
+            <ion-input 
+              type="text" 
+              class="test" 
+              placeholder="Your company or project name goes here" 
+              formControlName="cname"
+            >
+>>>>>>> 52f558ea7a7aac284955e9bb37644b51262f780a
               <ion-icon name="sunny-outline" class="input-icon"></ion-icon>
             </ion-input>
           </div>
@@ -48,9 +57,20 @@
 
         <!-- User Name -->
         <div class="pad">
+<<<<<<< HEAD
           <label class="signin-input-label">Username:</label>
           <div class="input-container">
             <ion-input type="text" class="test" placeholder="Choose a memorable username." formControlName="uname">
+=======
+            <label class="signin-input-label">Username:</label>
+          <div class="input-container">
+            <ion-input 
+              type="text" 
+              class="test" 
+              placeholder="Choose a memorable username." 
+              formControlName="uname"
+            >
+>>>>>>> 52f558ea7a7aac284955e9bb37644b51262f780a
               <ion-icon name="person-outline" class="input-icon"></ion-icon>
             </ion-input>
           </div>
@@ -72,10 +92,21 @@
 
         <!-- Email -->
         <div class="pad">
+<<<<<<< HEAD
           <label class="signin-input-label">Email:</label>
           <div class="input-container">
             <ion-input type="email" class="test" placeholder="Gmail or major providers ensure delivery."
               formControlName="email">
+=======
+            <label class="signin-input-label">Email:</label>
+          <div class="input-container">
+            <ion-input 
+              type="email" 
+              class="test" 
+              placeholder="Gmail or major providers ensure delivery." 
+              formControlName="email"
+            >
+>>>>>>> 52f558ea7a7aac284955e9bb37644b51262f780a
               <ion-icon name="mail-outline" class="input-icon"></ion-icon>
             </ion-input>
           </div>
@@ -93,10 +124,21 @@
 
         <!-- Password -->
         <div class="pad">
+<<<<<<< HEAD
           <label class="signin-input-label">Password:</label>
           <div class="input-container">
             <ion-input [type]="showPassword ? 'text' : 'password'" class="test"
               placeholder="Pick a secure password you can remember." formControlName="password">
+=======
+            <label class="signin-input-label">Password:</label>
+          <div class="input-container">
+            <ion-input 
+              [type]="showPassword ? 'text' : 'password'" 
+              class="test" 
+              placeholder="Pick a secure password you can remember." 
+              formControlName="password"
+            >
+>>>>>>> 52f558ea7a7aac284955e9bb37644b51262f780a
             </ion-input>
             <ion-icon [name]="showPassword ? 'eye-off' : 'eye'" (click)="togglePasswordVisibility('password')"
               slot="end" class="eye-icon">
@@ -113,10 +155,21 @@
 
         <!-- Confirm Password -->
         <div class="pad">
+<<<<<<< HEAD
           <label class="signin-input-label">Confirm Password:</label>
           <div class="input-container">
             <ion-input [type]="showConfirmPassword ? 'text' : 'password'" class="test"
               placeholder="Confirm password (must match password)" formControlName="confirm">
+=======
+            <label class="signin-input-label">Confirm Password:</label>
+          <div class="input-container">
+            <ion-input 
+              [type]="showConfirmPassword ? 'text' : 'password'" 
+              class="test" 
+              placeholder="Confirm password (must match password)" 
+              formControlName="confirm"
+            >  
+>>>>>>> 52f558ea7a7aac284955e9bb37644b51262f780a
             </ion-input>
             <ion-icon [name]="showConfirmPassword ? 'eye-off' : 'eye'" (click)="togglePasswordVisibility('confirm')"
               slot="end" class="eye-icon">
@@ -132,6 +185,7 @@
         </div>
 
         <!-- Company Description -->
+<<<<<<< HEAD
         <!-- Social Media -->
         <div class="pad">
           <label class="signin-input-label">
@@ -160,6 +214,35 @@
         </div>
 
 
+=======
+     <!-- Social Media -->
+<div class="pad">
+  <label class="signin-input-label">
+    Social Media Links:
+  </label>
+
+  <div class="input-container">
+    <ion-input
+      type="url"
+      class="test"
+      placeholder="LinkedIn, Facebook, X or Instagram"
+      formControlName="social">
+      <ion-icon name="link-outline" class="input-icon"></ion-icon>
+    </ion-input>
+  </div>
+
+  <div
+    *ngIf="signupform.get('social')?.touched && signupform.get('social')?.errors">
+    <span
+      class="validate-errors pb-3 float-left"
+      *ngIf="signupform.get('social')?.errors?.['pattern']">
+      Enter a valid LinkedIn, Facebook, X, or Instagram link
+    </span>
+  </div>
+</div>
+
+        
+>>>>>>> 52f558ea7a7aac284955e9bb37644b51262f780a
         <!-- Information Text -->
         <p style="font-size: 16px;color: #707cba;margin-left: 8px;">
           Please check your email (also junk mail) for instructions on how to create your data collector survey.

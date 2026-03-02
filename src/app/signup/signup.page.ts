@@ -46,10 +46,21 @@ export class SignupPage implements OnInit {
       ]),
       password: new FormControl("", [Validators.required]),
       confirm: new FormControl("", [Validators.required]),
+<<<<<<< HEAD
 
 
       // ✅ Social media (optional but validated if entered)
       social: new FormControl(""),
+=======
+     
+
+      // ✅ Social media (optional but validated if entered)
+social: new FormControl("", [
+  Validators.pattern(
+    /^(https?:\/\/)?(www\.)?(linkedin\.com|facebook\.com|instagram\.com|x\.com|twitter\.com)\/[^\s,]+$/i
+  ),
+]),
+>>>>>>> 52f558ea7a7aac284955e9bb37644b51262f780a
 
     });
   }
