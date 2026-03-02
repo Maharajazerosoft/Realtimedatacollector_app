@@ -184,3 +184,13 @@ ion-content::after {
 .btn-class {
     font-size: 21px;
 }
+
+::ng-deep .dynamic-content table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  ::ng-deep .dynamic-content td,
+  ::ng-deep .dynamic-content th {
+    padding: 12px !important;
+  }

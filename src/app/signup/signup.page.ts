@@ -49,11 +49,7 @@ export class SignupPage implements OnInit {
       
 
       // ✅ Social media (optional but validated if entered)
-social: new FormControl("", [
-  Validators.pattern(
-    /^(https?:\/\/)?(www\.)?(linkedin\.com|facebook\.com|instagram\.com|x\.com|twitter\.com)\/[^\s,]+$/i
-  ),
-]),
+social: new FormControl(""),
 
 
     });

@@ -24,7 +24,7 @@
         </div>
       </ion-button>
 
-      <div *ngIf="introPageType==1 || introPageType==2" [innerHTML]="sanitize.bypassSecurityTrustHtml(introContent)">
+      <div class="dynamic-content" *ngIf="introPageType==1 || introPageType==2" [innerHTML]="sanitize.bypassSecurityTrustHtml(introContent)">
       </div>
 
       <p *ngIf="introPageType==1" class="survey-note">

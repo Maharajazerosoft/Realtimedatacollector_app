@@ -348,9 +348,11 @@ ion-textarea {
 
                 .label {
                     text-align: left;
+                    align-items: baseline;
                     font-weight: bold;
-                    font-size: 17px;
+                    font-size: 20px;
                     display: flex;
+                    gap: 5px;
                 }
 
                 ion-radio-group {
@@ -394,7 +396,9 @@ ion-textarea {
                     }
                 }
 
-                ion-input {
+                ion-input,
+                ion-textarea,
+                ion-select {
                     border: 1px solid silver;
                     font-size: 20px;
                     background: #fff !important;
@@ -650,4 +654,8 @@ ion-content::after {
     background: white;
     z-index: 1;
     pointer-events: none; 
-  }
+}
+
+ul {
+    margin-top: unset;
+}
