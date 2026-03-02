@@ -5,7 +5,7 @@
         <ion-icon slot="icon-only" name="arrow-undo-circle"></ion-icon>
       </ion-button>
     </ion-buttons>
-    
+
     <div class="txtcenter">
       <img src="../../assets/img/logo.png" alt="logo" />
     </div>
@@ -16,7 +16,7 @@
   <div class="txtcenter">
     <h4 style="font-size: 20px;color:#fff; font-weight: 600;">Create Your Admin Account</h4>
   </div>
-  
+
   <div style="margin:0px;">
     <div class="white-container">
       <form class="login-form mt-4" [formGroup]="signupform">
@@ -25,12 +25,8 @@
           <label class="signin-input-label">Company/Project Name:</label>
 
           <div class="input-container">
-            <ion-input 
-              type="text" 
-              class="test" 
-              placeholder="Your company or project name goes here" 
-              formControlName="cname"
-            >
+            <ion-input type="text" class="test" placeholder="Your company or project name goes here"
+              formControlName="cname">
               <ion-icon name="sunny-outline" class="input-icon"></ion-icon>
             </ion-input>
           </div>
@@ -41,18 +37,20 @@
               Enter Company Name<br>
             </span>
           </div>
+          <!-- Warning Message -->
+          <div class="warning-message" style="display: flex; align-items: center;">
+            <ion-icon name="warning-outline" style="color: #9e9e9e; font-size: 16px; margin-right: 6px;"></ion-icon>
+            <span style="font-size: 13px; color: #757575;">
+              Please use a valid name and avoid gibberish
+            </span>
+          </div>
         </div>
 
         <!-- User Name -->
         <div class="pad">
-            <label class="signin-input-label">Username:</label>
+          <label class="signin-input-label">Username:</label>
           <div class="input-container">
-            <ion-input 
-              type="text" 
-              class="test" 
-              placeholder="Choose a memorable username." 
-              formControlName="uname"
-            >
+            <ion-input type="text" class="test" placeholder="Choose a memorable username." formControlName="uname">
               <ion-icon name="person-outline" class="input-icon"></ion-icon>
             </ion-input>
           </div>
@@ -63,18 +61,21 @@
               Enter User Name<br>
             </span>
           </div>
+          <!-- Warning Message -->
+          <div class="warning-message" style="display: flex; align-items: center;">
+            <ion-icon name="warning-outline" style="color: #9e9e9e; font-size: 16px; margin-right: 6px;"></ion-icon>
+            <span style="font-size: 13px; color: #757575;">
+              Please use a valid name and avoid gibberish
+            </span>
+          </div>
         </div>
 
         <!-- Email -->
         <div class="pad">
-            <label class="signin-input-label">Email:</label>
+          <label class="signin-input-label">Email:</label>
           <div class="input-container">
-            <ion-input 
-              type="email" 
-              class="test" 
-              placeholder="Gmail or major providers ensure delivery." 
-              formControlName="email"
-            >
+            <ion-input type="email" class="test" placeholder="Gmail or major providers ensure delivery."
+              formControlName="email">
               <ion-icon name="mail-outline" class="input-icon"></ion-icon>
             </ion-input>
           </div>
@@ -84,9 +85,7 @@
               class="validate-errors pb-3 float-left pt-3">
               Enter Email <br>
             </span>
-            <span 
-              class="validate-errors pb-3 float-left" 
-              *ngIf="signupform.get('email')?.errors?.['pattern']">
+            <span class="validate-errors pb-3 float-left" *ngIf="signupform.get('email')?.errors?.['pattern']">
               Enter valid email address
             </span>
           </div>
@@ -94,20 +93,13 @@
 
         <!-- Password -->
         <div class="pad">
-            <label class="signin-input-label">Password:</label>
+          <label class="signin-input-label">Password:</label>
           <div class="input-container">
-            <ion-input 
-              [type]="showPassword ? 'text' : 'password'" 
-              class="test" 
-              placeholder="Pick a secure password you can remember." 
-              formControlName="password"
-            >
+            <ion-input [type]="showPassword ? 'text' : 'password'" class="test"
+              placeholder="Pick a secure password you can remember." formControlName="password">
             </ion-input>
-            <ion-icon 
-              [name]="showPassword ? 'eye-off' : 'eye'" 
-              (click)="togglePasswordVisibility('password')" 
-              slot="end"
-              class="eye-icon">
+            <ion-icon [name]="showPassword ? 'eye-off' : 'eye'" (click)="togglePasswordVisibility('password')"
+              slot="end" class="eye-icon">
             </ion-icon>
           </div>
           <div *ngIf="signupform.get('password')?.errors">
@@ -118,23 +110,16 @@
             </span>
           </div>
         </div>
-        
+
         <!-- Confirm Password -->
         <div class="pad">
-            <label class="signin-input-label">Confirm Password:</label>
+          <label class="signin-input-label">Confirm Password:</label>
           <div class="input-container">
-            <ion-input 
-              [type]="showConfirmPassword ? 'text' : 'password'" 
-              class="test" 
-              placeholder="Confirm password (must match password)" 
-              formControlName="confirm"
-            >  
+            <ion-input [type]="showConfirmPassword ? 'text' : 'password'" class="test"
+              placeholder="Confirm password (must match password)" formControlName="confirm">
             </ion-input>
-            <ion-icon 
-              [name]="showConfirmPassword ? 'eye-off' : 'eye'" 
-              (click)="togglePasswordVisibility('confirm')" 
-              slot="end"
-              class="eye-icon">
+            <ion-icon [name]="showConfirmPassword ? 'eye-off' : 'eye'" (click)="togglePasswordVisibility('confirm')"
+              slot="end" class="eye-icon">
             </ion-icon>
           </div>
           <div *ngIf="signupform.get('confirm')?.errors">
@@ -147,63 +132,64 @@
         </div>
 
         <!-- Company Description -->
-     <!-- Social Media -->
-<div class="pad">
-  <label class="signin-input-label">
-    Social Media Links:
-  </label>
+        <!-- Social Media -->
+        <div class="pad">
+          <label class="signin-input-label">
+            Social Media Links:
+          </label>
 
-  <div class="input-container">
-    <ion-input
-      type="url"
-      class="test"
-      placeholder="LinkedIn, Facebook, X or Instagram"
-      formControlName="social">
-      <ion-icon name="link-outline" class="input-icon"></ion-icon>
-    </ion-input>
-  </div>
+          <div class="input-container">
+            <ion-input type="url" class="test" placeholder="LinkedIn, Facebook, X or Instagram"
+              formControlName="social">
+              <ion-icon name="link-outline" class="input-icon"></ion-icon>
+            </ion-input>
+          </div>
 
-  <div
-    *ngIf="signupform.get('social')?.touched && signupform.get('social')?.errors">
-    <span
-      class="validate-errors pb-3 float-left"
-      *ngIf="signupform.get('social')?.errors?.['pattern']">
-      Enter a valid LinkedIn, Facebook, X, or Instagram link
-    </span>
-  </div>
-</div>
+          <!-- <div *ngIf="signupform.get('social')?.touched && signupform.get('social')?.errors">
+            <span class="validate-errors pb-3 float-left" *ngIf="signupform.get('social')?.errors?.['pattern']">
+              Enter a valid LinkedIn, Facebook, X, or Instagram link
+            </span>
+          </div> -->
+          <!-- Warning Message -->
+          <div class="warning-message" style="display: flex; align-items: center;">
+            <ion-icon name="warning-outline" style="color: #9e9e9e; font-size: 16px; margin-right: 6px;"></ion-icon>
+            <span style="font-size: 13px; color: #757575;">
+              Please use a valid name and avoid gibberish
+            </span>
+          </div>
+        </div>
 
-        
+
         <!-- Information Text -->
         <p style="font-size: 16px;color: #707cba;margin-left: 8px;">
-          Please check your email (also junk mail) for instructions on how to create your data collector survey. 
-          <b style="font-size: 16px;color: #707cba;">The data gathering survey dashboard can only be accessed via laptop or desktop.</b>
-        </p>      
-        
+          Please check your email (also junk mail) for instructions on how to create your data collector survey.
+          <b style="font-size: 16px;color: #707cba;">The data gathering survey dashboard can only be accessed via laptop
+            or desktop.</b>
+        </p>
+
         <!-- SignUp Button -->
-        <ion-button 
-          style="--background:linear-gradient(180deg, #cd43ec 0%, #b37cf0 100%)" 
-          expand="block" 
+        <ion-button style="--background:linear-gradient(180deg, #cd43ec 0%, #b37cf0 100%)" expand="block"
           (click)="onsubmit()">
           SignUp
-        </ion-button>        
-        
+        </ion-button>
+
         <!-- Links and Text -->
         <p style="font-size: 16px;color: #707cba;text-align: center; margin-bottom: -15px;">
-          <a style="font-size: 17px; color: #707cba; font-weight: 600;" href="https://www.realtimedatacollector.com/multiple/client/beforereset.php">
+          <a style="font-size: 17px; color: #707cba; font-weight: 600;"
+            href="https://www.realtimedatacollector.com/multiple/client/beforereset.php">
             Forget Password?
           </a>
-        </p>        
-        
+        </p>
+
         <p style="font-size: 16px;color: #707cba;text-align: center; margin-bottom: -15px;">
           Want to access your Admin Account?
-        </p>        
-        
+        </p>
+
         <p style="font-size: 16px;color: #707cba;text-align: center;">
-          Visit 
+          Visit
           <a style="font-size: 17px; color: #707cba; font-weight: 600;" href="https://www.realtimedatacollector.com/">
             RealTimeDataCollector.com
-          </a> 
+          </a>
           website.
         </p>
       </form>

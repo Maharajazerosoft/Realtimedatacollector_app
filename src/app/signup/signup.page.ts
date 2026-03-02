@@ -20,7 +20,7 @@ export class SignupPage implements OnInit {
     private common: CommonService,
     private web: WebservicesService,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.buildForm();
@@ -46,14 +46,10 @@ export class SignupPage implements OnInit {
       ]),
       password: new FormControl("", [Validators.required]),
       confirm: new FormControl("", [Validators.required]),
-     
+
 
       // ✅ Social media (optional but validated if entered)
-social: new FormControl("", [
-  Validators.pattern(
-    /^(https?:\/\/)?(www\.)?(linkedin\.com|facebook\.com|instagram\.com|x\.com|twitter\.com)\/[^\s,]+$/i
-  ),
-]),
+      social: new FormControl(""),
 
     });
   }

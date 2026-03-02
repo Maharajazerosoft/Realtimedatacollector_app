@@ -65,13 +65,13 @@
           <div class="subsecQuestionContainer">
             <div class="formManager" *ngFor="let tForm of tSubSec.qnData;let j = index;">
               <div class="label">
-                <div *ngIf="tForm.qnType !== 'admin_cmd'" style="min-width: 27px; margin-top: 8px">
+                <div *ngIf="tForm.qnType !== 'admin_cmd'">
                   {{ j + 1 }}.
                 </div>
                 <div class="label" style="
                     display: unset;
                     overflow-wrap: anywhere;
-                    margin-top: 8px;
+                    /* margin-top: 8px; */
                     font-style: normal;
                     text-decoration: none;
                     font-family: Roboto Condensed;
@@ -129,11 +129,9 @@
                   name="formData[{{getLoopVal(i, j)}}]"></ion-input>
               </div>
               <div *ngIf="tForm.qnType==='textArea'" class="formText">
-                <ion-item class="item-background-color">
-                  <!-- <ion-label></ion-label> -->
-                  <ion-textarea rows="2" class="full-width-textarea" [(ngModel)]="formData[getLoopVal(i, j)]"
-                    name="formData[{{getLoopVal(i, j)}}]"></ion-textarea>
-                </ion-item>
+                <ion-textarea rows="2" class="item-background-color full-width-textarea"
+                  [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]">
+                </ion-textarea>
               </div>
               <div *ngIf="tForm.qnType==='country'" class="formText">
                 <ion-radio-group [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]"

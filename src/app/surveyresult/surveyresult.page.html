@@ -1,15 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-button
-    color="primary" slot="primary" class="home_btn" (click)="LogoutApp()">
+    <ion-button color="primary" slot="primary" class="home_btn" (click)="LogoutApp()">
       {{exitBtnText}}
     </ion-button>
 
-    <img *ngIf="!logoImage || logoImage==''" src="../../assets/img/logo.png"/>
-    <img *ngIf="logoImage && logoImage!=''" [src]="logoImage"/>
+    <img *ngIf="!logoImage || logoImage==''" src="../../assets/img/logo.png" />
+    <img *ngIf="logoImage && logoImage!=''" [src]="logoImage" />
 
-    <ion-button class="right_btn" (click)="gotoNav('startover', '0')"
-    color="primary">
+    <ion-button class="right_btn" (click)="gotoNav('startover', '0')" color="primary">
       Take <br> Survey
     </ion-button>
   </ion-toolbar>
@@ -20,17 +18,24 @@
   <div id="container">
     <h1>Survey Result</h1>
     <div class="white-container" *ngIf="thankyouContent!=null">
-      <img src="../../assets/img/img-thankyou.jpg" class="reg-img"/>
+      <img src="../../assets/img/img-thankyou.jpg" class="reg-img" />
       <!-- <ion-button style="max-width: unset; font-size: 22px;;height:60px;" class="login-btn two-lines" (click)="gotoNav('sendcopy','1')">Email Self a Survey<br> / Record Copy</ion-button> -->
-      <ion-button style="max-width: unset; font-size: 22px;;height:60px;" class="login-btn two-lines" (click)="gotoNav('sendcopy','1')">Email Self a Copy <br> of the survey</ion-button>
+      <ion-button style="max-width: unset; font-size: 15px;" class="login-btn two-lines"
+        (click)="gotoNav('sendcopy','1')">Email Self a Copy <br> of the survey</ion-button>
 
       <!-- <ion-button style="max-width: unset; font-size: 13px;;height:77px;" class="login-btn two-lines" (click)="gotoNav('sendcopy', '2')">Admin Notes allow the survey <br> creators to record personal observations.<br> It is their choice to either share <br> or not share the Admin Notes as part of <br> the Email Self a Copy.</ion-button> -->
-      <ion-button style="max-width: unset; font-size: 11px;;height:77px;" class="login-btn1 two-lines" (click)="gotoNav('sendcopy', '2')">Admin Notes allow the survey creators to record<br>personal observations. They may choose to share<br>or not share the Notes when you Email Self a Copy.</ion-button>
-    
-    
+      <ion-button class="login-btn1 two-lines admin-notes-box" (click)="gotoNav('sendcopy', '2')">
+        Admin Notes allow the survey creators to record<br>
+        personal observations. They may choose to share<br>
+        or not share the Notes when you Email Self a Copy.
+      </ion-button>
+
+
       <div [innerHTML]="thankyouContent"></div>
-   
-      <ion-button class="login-btn refresh-button" (click)="gotoNav('startover', '0')"><p class="font-white">Start Over&nbsp;</p><ion-icon name="refresh" class="refresh-icon"></ion-icon></ion-button>
+
+      <ion-button class="login-btn refresh-button" (click)="gotoNav('startover', '0')">
+        <p class="font-white">Start Over&nbsp;</p><ion-icon name="refresh" class="refresh-icon"></ion-icon>
+      </ion-button>
     </div>
     <div class="white-container" *ngIf="thankyouContent==null">
       <div class="ion-padding custom-skeleton result-img-default">
