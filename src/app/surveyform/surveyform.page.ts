@@ -17,6 +17,7 @@ import { environment } from "src/environments/environment";
 import { AddressComponent } from "../address/address.component";
 import { CommonService } from "../providers/common/common.service";
 import { WebservicesService } from "../providers/webservices/webservices.service";
+import { Keyboard } from "@capacitor/keyboard";
 
 @Component({
   selector: "app-surveyform",
@@ -50,6 +51,7 @@ export class SurveyformPage implements OnInit {
   formattedCaptcha: string = "";
   allowed_member: any;
   submitted_cnt: any;
+  keyboardVisible = false;
 
   constructor(
     public navCtrl: NavController,
@@ -77,6 +79,7 @@ export class SurveyformPage implements OnInit {
     this.companylogo = localStorage.getItem("surveyCompanyLogoLocal");
     this.updateLogo();
     this.platform.ready().then(() => this.showBannerAd());
+    this.setupKeyboardListeners();
   }
 
   generateCaptcha() {
@@ -111,6 +114,56 @@ export class SurveyformPage implements OnInit {
     }
   }
 
+  private setupKeyboardListeners() {
+    if (!Capacitor.isNativePlatform()) return;
+
+    Keyboard.addListener('keyboardWillShow', async () => {
+      await this.hideAd();
+    });
+
+    Keyboard.addListener('keyboardDidShow', async () => {
+      await this.hideAd(); // fallback in case WillShow didn't fire
+    });
+
+    Keyboard.addListener('keyboardWillHide', async () => {
+      await this.showAd();
+    });
+
+    Keyboard.addListener('keyboardDidHide', async () => {
+      await this.showAd(); // fallback in case WillHide didn't fire
+    });
+  }
+
+  private async hideAd() {
+    if (this.keyboardVisible) return; // already hidden, skip
+    this.keyboardVisible = true;
+    try {
+      await AdMob.hideBanner();
+    } catch (e) { }
+  }
+
+  private async showAd() {
+    if (!this.keyboardVisible) return; // already visible, skip
+    this.keyboardVisible = false;
+    try {
+      await AdMob.resumeBanner();
+    } catch (e) { }
+  }
+
+  // Call this from (ionFocus) on any input/textarea
+  async onInputFocus() {
+    await this.hideAd();
+  }
+
+  // Call this from (ionBlur) on any input/textarea
+  async onInputBlur() {
+    // Small delay to avoid flickering when jumping between fields
+    setTimeout(async () => {
+      if (!this.keyboardVisible) return;
+      await this.showAd();
+    }, 300);
+  }
+
   async showBannerAd() {
     if (!Capacitor.isNativePlatform()) {
       return;
@@ -133,6 +186,13 @@ export class SurveyformPage implements OnInit {
       console.log('Home banner ad loaded');
     } catch (err) {
       console.error('Home banner ad error:', err);
+    }
+  }
+
+  ngOnDestroy() {
+    // Clean up keyboard listeners when leaving page
+    if (Capacitor.isNativePlatform()) {
+      Keyboard.removeAllListeners();
     }
   }
 

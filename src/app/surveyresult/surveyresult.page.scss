@@ -14,13 +14,66 @@ ion-toolbar {
     height: 75px;
   }
 
-  ion-button {
-    // margin-top: -4px!important;
-    margin-right: 25px !important;
-    position: absolute;
-    right: -5px;
-    --box-shadow: none;
+  // ion-button {
+  //   // margin-top: -4px!important;
+  //   margin-right: 25px !important;
+  //   position: absolute;
+  //   right: -5px;
+  //   --box-shadow: none;
+  // }
+}
+
+ion-toolbar {
+  .header-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-section {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:first-child {
+        justify-content: flex-start;
+      }
+
+      &:last-child {
+        justify-content: flex-end;
+      }
+    }
   }
+
+  .logo-container {
+    img {
+      height: 75px;
+      max-width: 100%;
+      object-fit: contain;
+    }
+  }
+
+  ion-button {
+    margin: 0;
+    // --padding-start: 12px;
+    // --padding-end: 12px;
+    // height: 36px;
+    font-size: 18px;
+    height: 65px;
+  }
+}
+
+/* Left Button */
+.home_btn {
+  border-radius: 5px;
+  --background: #347dff;
+}
+
+/* Right Button */
+.right_btn {
+  border-radius: 5px;
+  --background: #347dff; // FIXED (you had ##347dff)
 }
 
 ion-button.login-btn {
@@ -228,7 +281,7 @@ ion-content {
   left: 10px;
   right: unset !important;
   margin-top: unset !important;
-  padding: 8px 0px;
+  // padding: 8px 0px;
     border-radius: 5px;
     background-color: #347dff;
     --background: #347dff;
@@ -238,7 +291,7 @@ ion-content {
 
 .right_btn {
   margin-top: 6px !important;
-  padding: 10px 0px;
+  // padding: 10px 0px;
     border-radius: 5px;
     background-color: #347dff;
     --background: ##347dff;

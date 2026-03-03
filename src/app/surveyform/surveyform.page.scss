@@ -187,6 +187,9 @@ ion-textarea {
     margin-top: 5px;
     margin-bottom: 21px;
     background-color: white;
+    min-height: 60px;
+    height: auto !important;
+    overflow: hidden !important;
 
     .item-native {
         padding-inline-start: 0 !important;
@@ -415,6 +418,10 @@ ion-textarea {
                     --padding-bottom: 10px;
                     --padding-start: 19px;
                     --padding-end: 19px;
+
+                    min-height: 60px;
+                    height: auto !important;
+                    overflow: hidden !important;
                 }
 
                 ion-select {
@@ -645,16 +652,22 @@ ion-content {
 }
 
 ion-content::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 80px;
-    background: white;
+    height: 60px;
+    background: #ffffff;
     z-index: 1;
-    pointer-events: none; 
-}
+    pointer-events: none;
+    transition: height 0.25s ease;
+  }
+  
+  /* when keyboard is open, collapse the white spacer */
+  ion-content.keyboard-open::after {
+    height: 0;
+  }
 
 ul {
     margin-top: unset;

@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-button
     color="primary" slot="primary" class="home_btn" (click)="LogoutApp()">
@@ -14,6 +14,40 @@
     </ion-button>
   </ion-toolbar>
 
+</ion-header> -->
+
+<ion-header [translucent]="true" class="survey-header">
+  <ion-toolbar>
+    <div class="header-container">
+
+      <!-- Left Section - Exit Button -->
+      <div class="header-section">
+        <ion-button color="primary"
+                    class="home_btn"
+                    (click)="LogoutApp()">
+          {{ exitBtnText }}
+        </ion-button>
+      </div>
+
+      <!-- Middle Section - Logo -->
+      <div class="header-section">
+        <div class="logo-container">
+          <img *ngIf="!logoImage || logoImage==''" src="../../assets/img/logo.png" />
+          <img *ngIf="logoImage && logoImage!=''" [src]="logoImage" />
+        </div>
+      </div>
+
+      <!-- Right Section - Take Survey Button -->
+      <div class="header-section">
+        <ion-button class="right_btn"
+                    color="primary"
+                    (click)="gotoNav('startover', '0')">
+          Take <br /> Survey
+        </ion-button>
+      </div>
+
+    </div>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -25,13 +59,13 @@
       <ion-button style="max-width: unset; font-size: 22px;;height:60px;" class="login-btn two-lines" (click)="gotoNav('sendcopy','1')">Email Self a Copy <br> of the survey</ion-button>
 
       <!-- <ion-button style="max-width: unset; font-size: 13px;;height:77px;" class="login-btn two-lines" (click)="gotoNav('sendcopy', '2')">Admin Notes allow the survey <br> creators to record personal observations.<br> It is their choice to either share <br> or not share the Admin Notes as part of <br> the Email Self a Copy.</ion-button> -->
-      <ion-button 
+      <!-- <ion-button 
   class="login-btn1 two-lines admin-notes-box"
   (click)="gotoNav('sendcopy', '2')">
   Admin Notes allow the survey creators to record<br>
   personal observations. They may choose to share<br>
   or not share the Notes when you Email Self a Copy.
-</ion-button>
+</ion-button> -->
     
       <div class="font-size-21" [innerHTML]="thankyouContent"></div>
       <ion-button class="login-btn refresh-button" (click)="gotoNav('startover', '0')"><p class="font-white">Start Over&nbsp;</p><ion-icon name="refresh" class="refresh-icon"></ion-icon></ion-button>
