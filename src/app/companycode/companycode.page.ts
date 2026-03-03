@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { Platform } from "@ionic/angular";
 import { Capacitor } from "@capacitor/core";
 import { AdMob, BannerAdPosition, BannerAdSize, type BannerAdOptions } from '@capacitor-community/admob';
+import { Keyboard } from "@capacitor/keyboard";
 
 @Component({
   selector: "app-companycode",
@@ -15,6 +16,7 @@ import { AdMob, BannerAdPosition, BannerAdSize, type BannerAdOptions } from '@ca
 export class CompanycodePage implements OnInit {
   companyCode: string = '';
   localCompanyCodes: any = [];
+  keyboardVisible = false;
 
   constructor(
     private common: CommonService,
@@ -25,6 +27,7 @@ export class CompanycodePage implements OnInit {
 
   ngOnInit() {
     this.bannerad();
+    this.setupKeyboardListeners();
   }
 
   updateCompany(code: string) {
@@ -125,6 +128,24 @@ export class CompanycodePage implements OnInit {
     }
   }
 
+  private setupKeyboardListeners() {
+    if (!Capacitor.isNativePlatform()) return;
+
+    Keyboard.addListener('keyboardWillShow', async () => {
+      this.keyboardVisible = true;
+      try {
+        await AdMob.hideBanner();
+      } catch (e) { }
+    });
+
+    Keyboard.addListener('keyboardWillHide', async () => {
+      this.keyboardVisible = false;
+      try {
+        await AdMob.resumeBanner();
+      } catch (e) { }
+    });
+  }
+
   async bannerad() {
     if (!Capacitor.isNativePlatform()) {
       return;
@@ -133,20 +154,24 @@ export class CompanycodePage implements OnInit {
     try {
       await AdMob.initialize();
 
-      // Disable test ads now that integration is verified.
-      const useTestAds = false;
-
       const options: BannerAdOptions = {
         adId: 'ca-app-pub-8416006941552663/5184354352',
         adSize: BannerAdSize.ADAPTIVE_BANNER,
         position: BannerAdPosition.BOTTOM_CENTER,
-        isTesting: useTestAds,
+        isTesting: false,
         margin: 0
       };
       await AdMob.showBanner(options);
       console.log('Banner ad loaded');
     } catch (e) {
       console.log('Banner ad error:', e);
+    }
+  }
+
+  ngOnDestroy() {
+    // Clean up keyboard listeners when leaving page
+    if (Capacitor.isNativePlatform()) {
+      Keyboard.removeAllListeners();
     }
   }
 }

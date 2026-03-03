@@ -30,7 +30,7 @@
     </div>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true" class="survey-form-page">
+<ion-content [fullscreen]="true" class="survey-form-page" [class.keyboard-open]="keyboardVisible">
   <div class="validation_txt" *ngIf="validationText!=''">
     <div [innerHTML]="validationText"></div>
     <ion-button fill="clear" class="close-btn" (click)="validationText=''">
@@ -107,11 +107,13 @@
               <div *ngIf="tForm.qnType==='address' && formCountrySwitch=='yes'" class="formText">
                 <ion-input class="item-background-color" type="text" name="address" placeholder=""
                   (click)="openAddress(getLoopVal(i, j))" [readonly]="true" [(ngModel)]="formData[getLoopVal(i, j)]"
-                  name="formData[{{getLoopVal(i, j)}}]"></ion-input>
+                  name="formData[{{getLoopVal(i, j)}}]" (ionFocus)="onInputFocus()"
+                  (ionBlur)="onInputBlur()"></ion-input>
               </div>
               <div *ngIf="tForm.qnType==='address' && formCountrySwitch=='no'" class="formText">
                 <ion-input class="item-background-color" type="text" name="address" placeholder=""
-                  [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]"></ion-input>
+                  [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]"
+                  (ionFocus)="onInputFocus()" (ionBlur)="onInputBlur()"></ion-input>
               </div>
               <div *ngIf="tForm.qnType==='checkbox'" class="formCheckbox" [(ngModel)]="formData[getLoopVal(i, j)]"
                 name="formData[{{getLoopVal(i, j)}}]">
@@ -126,11 +128,13 @@
               </div>
               <div *ngIf="tForm.qnType==='text'" class="formText">
                 <ion-input class="item-background-color" type="text" [(ngModel)]="formData[getLoopVal(i, j)]"
-                  name="formData[{{getLoopVal(i, j)}}]"></ion-input>
+                  name="formData[{{getLoopVal(i, j)}}]" (ionFocus)="onInputFocus()"
+                  (ionBlur)="onInputBlur()"></ion-input>
               </div>
               <div *ngIf="tForm.qnType==='textArea'" class="formText">
-                <ion-textarea rows="2" class="item-background-color full-width-textarea"
-                  [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]">
+                <ion-textarea [autoGrow]="true" class="item-background-color full-width-textarea"
+                  [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]"
+                  (ionFocus)="onInputFocus()" (ionBlur)="onInputBlur()">
                 </ion-textarea>
               </div>
               <div *ngIf="tForm.qnType==='country'" class="formText">
@@ -149,8 +153,9 @@
               <div *ngIf="tForm.qnType==='admin_cmd'" class="formText">
                 <ion-item class="item-background-color">
                   <!-- <ion-label></ion-label> -->
-                  <ion-textarea rows="2" class="full-width-textarea" [(ngModel)]="formData[getLoopVal(i, j)]"
-                    [name]="'formData_' + getLoopVal(i, j)"></ion-textarea>
+                  <ion-textarea [autoGrow]="true" class="full-width-textarea" [(ngModel)]="formData[getLoopVal(i, j)]"
+                    [name]="'formData_' + getLoopVal(i, j)" (ionFocus)="onInputFocus()"
+                    (ionBlur)="onInputBlur()"></ion-textarea>
                 </ion-item>
               </div>
               <div *ngIf="tForm.qnType==='image'" class="formText">
@@ -165,8 +170,8 @@
                     <span>PDF Document</span>
                   </div>
 
-                  <ion-input type="text" placeholder="Upload Image" readonly
-                    [(ngModel)]="formData[getLoopVal(i, j)]"></ion-input>
+                  <ion-input type="text" placeholder="Upload Image" readonly [(ngModel)]="formData[getLoopVal(i, j)]"
+                    (ionFocus)="onInputFocus()" (ionBlur)="onInputBlur()"></ion-input>
 
                   <ion-icon color="primary" class="ion-padding-start" name="cloud-upload-outline"
                     (click)="actionSheetUpload(getLoopVal(i, j))"></ion-icon>
@@ -188,7 +193,7 @@
             " />
         </div>
         <ion-input class="captchinput" style="padding-left: 12px" name="captcha" type="text" [(ngModel)]="captchaInput"
-          placeholder="Enter CAPTCHA" required></ion-input>
+          placeholder="Enter CAPTCHA" (ionFocus)="onInputFocus()" (ionBlur)="onInputBlur()" required></ion-input>
         <p *ngIf="isCaptchaInvalid">Invalid CAPTCHA, please try again.</p>
       </div>
       <div class="surveyf-buttons">

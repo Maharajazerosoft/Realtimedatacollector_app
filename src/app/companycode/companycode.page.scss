@@ -24,17 +24,36 @@ ion-content {
   }
 }
 
-/* white bottom area */
+// /* white bottom area */
+// ion-content::after {
+//   content: "";
+//   position: absolute;
+//   left: 0;
+//   bottom: 0;
+//   width: 100%;
+//   height: 70px; /* banner height */
+//   background: #ffffff;
+//   z-index: 1;
+//   pointer-events: none;
+// }
+
+/* white bottom area — shown only when keyboard is closed */
 ion-content::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 70px; /* banner height */
+  height: 60px;
   background: #ffffff;
   z-index: 1;
   pointer-events: none;
+  transition: height 0.25s ease;
+}
+
+/* when keyboard is open, collapse the white spacer */
+ion-content.keyboard-open::after {
+  height: 0;
 }
 
 .white-container {
