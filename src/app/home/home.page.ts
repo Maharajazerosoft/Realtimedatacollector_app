@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonService } from '../providers/common/common.service';
 import { WebservicesService } from '../providers/webservices/webservices.service';
@@ -14,7 +14,7 @@ import { AdMob, BannerAdPosition, BannerAdSize, type BannerAdOptions } from '@ca
   styleUrls: ['home.page.scss'],
   standalone: false,
 })
-export class HomePage {
+export class HomePage implements OnInit {
   userid: any;
   introContent: any;
   introPageType: any = 0;
@@ -148,8 +148,8 @@ export class HomePage {
         adId: 'ca-app-pub-8416006941552663/5184354352',
         adSize: BannerAdSize.ADAPTIVE_BANNER,
         position: BannerAdPosition.BOTTOM_CENTER,
-        margin: 0,
         isTesting: false,
+        margin: 0
       };
 
       await AdMob.showBanner(options);

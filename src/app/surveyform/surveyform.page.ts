@@ -178,8 +178,8 @@ export class SurveyformPage implements OnInit {
         adId: 'ca-app-pub-8416006941552663/5184354352',
         adSize: BannerAdSize.ADAPTIVE_BANNER,
         position: BannerAdPosition.BOTTOM_CENTER,
-        margin: 0,
         isTesting: false,
+        margin: 0
       };
 
       await AdMob.showBanner(options);
