@@ -5,8 +5,8 @@ import { CommonService } from '../providers/common/common.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Capacitor } from '@capacitor/core';
-import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
 import { Platform } from '@ionic/angular';
+import { AdMobService } from '../providers/admob/admob.service';
 
 @Component({
   selector: 'app-select-intro',
@@ -29,26 +29,20 @@ export class SelectIntroPage implements OnInit {
     private common: CommonService,
     private router: Router,
     public sanitize: DomSanitizer,
-    // private admobFree: AdMobFree,
     private platform: Platform,
+    private admobService: AdMobService
   ) { }
 
   ngOnInit() {
     this.fillInfo();
-    this.platform.ready().then(() => {
-      this.showBannerAd();
-    });
+    this.platform.ready().then(() => this.showBannerAd());
   }
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad SearchresultPage");
+  ionViewDidEnter() {
     this.showBannerAd();
   }
-
-
 
   fillInfo() {
-    this.showBannerAd();
     this.fetchingStatus = true;
     this.web.getData('getAdminIntroContent', '').then(res => {
       this.fetchingStatus = false;
@@ -81,27 +75,13 @@ export class SelectIntroPage implements OnInit {
   }
 
   async showBannerAd() {
-    if (!Capacitor.isNativePlatform()) {
-      return;
-    }
-
+    if (!Capacitor.isNativePlatform()) return;
     await this.platform.ready();
-
     try {
-      await AdMob.initialize();
-
-      const options: BannerAdOptions = {
-        adId: 'ca-app-pub-8416006941552663/5184354352',
-        adSize: BannerAdSize.ADAPTIVE_BANNER,
-        position: BannerAdPosition.BOTTOM_CENTER,
-        isTesting: false,
-        margin: 0
-      };
-
-      await AdMob.showBanner(options);
-      console.log('Home banner ad loaded');
+      await this.admobService.showBanner();
+      console.info('AdMob banner loaded (select-intro)');
     } catch (err) {
-      console.error('Home banner ad error:', err);
+      console.error('AdMob banner error:', err);
     }
   }
 

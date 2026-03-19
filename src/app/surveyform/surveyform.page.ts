@@ -1,5 +1,4 @@
 import { Component, OnInit, SecurityContext, ViewChild, ViewEncapsulation } from "@angular/core";
-import { AdMob, BannerAdPosition, BannerAdSize, type BannerAdOptions } from '@capacitor-community/admob';
 import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
@@ -18,6 +17,7 @@ import { AddressComponent } from "../address/address.component";
 import { CommonService } from "../providers/common/common.service";
 import { WebservicesService } from "../providers/webservices/webservices.service";
 import { Keyboard } from "@capacitor/keyboard";
+import { AdMobService } from "../providers/admob/admob.service";
 
 @Component({
   selector: "app-surveyform",
@@ -62,6 +62,7 @@ export class SurveyformPage implements OnInit {
     private actionCtrl: ActionSheetController,
     private platform: Platform,
     public sanitize: DomSanitizer,
+    private admobService: AdMobService
   ) {
     this.formBuilder = [];
     this.userid = localStorage.getItem("SAloginID");
@@ -135,19 +136,15 @@ export class SurveyformPage implements OnInit {
   }
 
   private async hideAd() {
-    if (this.keyboardVisible) return; // already hidden, skip
+    if (this.keyboardVisible) return;
     this.keyboardVisible = true;
-    try {
-      await AdMob.hideBanner();
-    } catch (e) { }
+    await this.admobService.hideBanner();
   }
 
   private async showAd() {
-    if (!this.keyboardVisible) return; // already visible, skip
+    if (!this.keyboardVisible) return;
     this.keyboardVisible = false;
-    try {
-      await AdMob.resumeBanner();
-    } catch (e) { }
+    await this.admobService.resumeBanner();
   }
 
   // Call this from (ionFocus) on any input/textarea
@@ -165,27 +162,13 @@ export class SurveyformPage implements OnInit {
   }
 
   async showBannerAd() {
-    if (!Capacitor.isNativePlatform()) {
-      return;
-    }
-
+    if (!Capacitor.isNativePlatform()) return;
     await this.platform.ready();
-
     try {
-      await AdMob.initialize();
-
-      const options: BannerAdOptions = {
-        adId: 'ca-app-pub-8416006941552663/5184354352',
-        adSize: BannerAdSize.ADAPTIVE_BANNER,
-        position: BannerAdPosition.BOTTOM_CENTER,
-        isTesting: false,
-        margin: 0
-      };
-
-      await AdMob.showBanner(options);
-      console.log('Home banner ad loaded');
+      await this.admobService.showBanner();
+      console.info('AdMob banner loaded (surveyform)');
     } catch (err) {
-      console.error('Home banner ad error:', err);
+      console.error('AdMob banner error:', err);
     }
   }
 
@@ -536,9 +519,8 @@ export class SurveyformPage implements OnInit {
   }
 
   async actionSheetUpload(index: number) {
-    // Hide banner before opening ActionSheet
     try {
-      await AdMob.hideBanner();
+      await this.admobService.hideBanner();
     } catch (e) { }
 
     const actionSheet = await this.actionCtrl.create({
@@ -573,10 +555,9 @@ export class SurveyformPage implements OnInit {
       ],
     });
 
-    // Resume banner AFTER ActionSheet is closed
     actionSheet.onDidDismiss().then(async () => {
       try {
-        await AdMob.resumeBanner();
+        await this.admobService.resumeBanner();
       } catch (e) { }
     });
 

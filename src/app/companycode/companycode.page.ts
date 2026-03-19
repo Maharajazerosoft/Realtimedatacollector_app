@@ -4,8 +4,9 @@ import { WebservicesService } from "../providers/webservices/webservices.service
 import { Router } from "@angular/router";
 import { Platform } from "@ionic/angular";
 import { Capacitor } from "@capacitor/core";
-import { AdMob, BannerAdPosition, BannerAdSize, type BannerAdOptions } from '@capacitor-community/admob';
 import { Keyboard } from "@capacitor/keyboard";
+import { AdMobService } from '../providers/admob/admob.service';
+import type { PluginListenerHandle } from '@capacitor/core';
 
 @Component({
   selector: "app-companycode",
@@ -17,16 +18,21 @@ export class CompanycodePage implements OnInit {
   companyCode: string = '';
   localCompanyCodes: any = [];
   keyboardVisible = false;
+  private keyboardListenerHandles: PluginListenerHandle[] = [];
 
   constructor(
     private common: CommonService,
     private web: WebservicesService,
     private router: Router,
-    private platform: Platform
+    private platform: Platform,
+    private admobService: AdMobService
   ) { }
 
   ngOnInit() {
     this.bannerad();
+  }
+
+  ionViewDidEnter() {
     this.setupKeyboardListeners();
   }
 
@@ -128,52 +134,53 @@ export class CompanycodePage implements OnInit {
     }
   }
 
-  private setupKeyboardListeners() {
+  private async setupKeyboardListeners() {
     if (!Capacitor.isNativePlatform()) return;
+    if (this.keyboardListenerHandles.length > 0) return;
 
-    Keyboard.addListener('keyboardWillShow', async () => {
+    const willShowHandle = await Keyboard.addListener('keyboardWillShow', async () => {
       this.keyboardVisible = true;
-      try {
-        await AdMob.hideBanner();
-      } catch (e) { }
+      await this.admobService.hideBanner();
     });
 
-    Keyboard.addListener('keyboardWillHide', async () => {
+    const didHideHandle = await Keyboard.addListener('keyboardDidHide', async () => {
       this.keyboardVisible = false;
-      try {
-        await AdMob.resumeBanner();
-      } catch (e) { }
+      await this.admobService.resumeBanner();
     });
+
+    this.keyboardListenerHandles.push(willShowHandle, didHideHandle);
+  }
+
+  async ionViewDidLeave() {
+    await this.cleanupKeyboardListeners();
+    this.keyboardVisible = false;
+    try {
+      await this.admobService.resumeBanner();
+    } catch (_) {}
+  }
+
+  private async cleanupKeyboardListeners() {
+    const handles = [...this.keyboardListenerHandles];
+    this.keyboardListenerHandles = [];
+    for (const handle of handles) {
+      try {
+        await handle.remove();
+      } catch (_) {}
+    }
   }
 
   async bannerad() {
-    if (!Capacitor.isNativePlatform()) {
-      return;
-    }
+    if (!Capacitor.isNativePlatform()) return;
     await this.platform.ready();
     try {
-      await AdMob.initialize();
-
-      // Disable test ads now that integration is verified.
-
-      const options: BannerAdOptions = {
-        adId: 'ca-app-pub-8416006941552663/5184354352',
-        adSize: BannerAdSize.ADAPTIVE_BANNER,
-        position: BannerAdPosition.BOTTOM_CENTER,
-        isTesting: false,
-        margin: 0
-      };
-      await AdMob.showBanner(options);
-      console.log('Banner ad loaded');
+      await this.admobService.showBanner();
+      console.info('AdMob banner loaded (companycode)');
     } catch (e) {
-      console.log('Banner ad error:', e);
+      console.error('AdMob banner error:', e);
     }
   }
 
-  ngOnDestroy() {
-    // Clean up keyboard listeners when leaving page
-    if (Capacitor.isNativePlatform()) {
-      Keyboard.removeAllListeners();
-    }
+  async ngOnDestroy() {
+    await this.cleanupKeyboardListeners();
   }
 }

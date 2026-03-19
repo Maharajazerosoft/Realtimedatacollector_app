@@ -6,7 +6,7 @@ import { AlertController, NavController, Platform } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Capacitor } from '@capacitor/core';
-import { AdMob, BannerAdPosition, BannerAdSize, type BannerAdOptions } from '@capacitor-community/admob';
+import { AdMobService } from '../providers/admob/admob.service';
 
 @Component({
   selector: 'app-home',
@@ -28,14 +28,13 @@ export class HomePage implements OnInit {
     private alertCtrl: AlertController,
     public web: WebservicesService,
     public sanitize: DomSanitizer,
-    private platform: Platform
+    private platform: Platform,
+    private admobService: AdMobService
   ) {
     this.introContent = null;
   }
 
-  ngOnInit() {
-    this.platform.ready().then(() => this.showBannerAd());
-  }
+  ngOnInit() { }
 
   exitFromCompany() {
     this.alertCtrl.create({
@@ -92,7 +91,10 @@ export class HomePage implements OnInit {
   ionViewWillEnter() {
     this.fillInfo();
     this.updateLogo();
-    this.showBannerAd();
+  }
+
+  async ionViewDidEnter() {
+    await this.showBannerAd();
   }
 
   fillInfo() {
@@ -135,27 +137,13 @@ export class HomePage implements OnInit {
   }
 
   async showBannerAd() {
-    if (!Capacitor.isNativePlatform()) {
-      return;
-    }
-
+    if (!Capacitor.isNativePlatform()) return;
     await this.platform.ready();
-
     try {
-      await AdMob.initialize();
-
-      const options: BannerAdOptions = {
-        adId: 'ca-app-pub-8416006941552663/5184354352',
-        adSize: BannerAdSize.ADAPTIVE_BANNER,
-        position: BannerAdPosition.BOTTOM_CENTER,
-        isTesting: false,
-        margin: 0
-      };
-
-      await AdMob.showBanner(options);
-      console.log('Home banner ad loaded');
+      await this.admobService.showBanner();
+      console.info('AdMob banner loaded (home)');
     } catch (err) {
-      console.error('Home banner ad error:', err);
+      console.error('AdMob banner error:', err);
     }
   }
 }
