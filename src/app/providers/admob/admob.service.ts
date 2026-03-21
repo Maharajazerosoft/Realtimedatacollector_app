@@ -17,6 +17,8 @@ import { getBannerOptions } from './admob-config';
 export class AdMobService {
   private initPromise: Promise<void> | null = null;
   private showBannerPromise: Promise<void> | null = null;
+  /** True when a banner was shown and may still exist (e.g. after page transition). */
+  private bannerWasShown = false;
 
   /** Initialize AdMob once at app startup. Safe to call multiple times. */
   async initialize(): Promise<void> {
@@ -34,28 +36,47 @@ export class AdMobService {
   async showBanner(): Promise<void> {
     if (!Capacitor.isNativePlatform()) return;
     await this.initialize();
+    // If banner was already shown (e.g. from previous page), try resume first to avoid "No ad to show" on rapid transitions.
+    if (this.bannerWasShown) {
+      try {
+        await AdMob.resumeBanner();
+        return;
+      } catch (_) {
+        this.bannerWasShown = false;
+      }
+    }
     // Prevent overlapping requests during fast page transitions.
     if (this.showBannerPromise) return this.showBannerPromise;
     this.showBannerPromise = (async () => {
       const options = getBannerOptions();
       try {
         await AdMob.showBanner(options);
+        this.bannerWasShown = true;
       } catch (err: any) {
-        // iOS sometimes returns "Request Error: No ad to show" after hide/resume.
-        // Force banner recreation once, then retry.
         const msg = String(err?.message ?? err ?? '');
         const code = Number(err?.code ?? NaN);
-        const isNoAdToShow = msg.includes('No ad to show') || code === 8;
+        const isNoAdToShow = msg.includes('No ad to show') || code === 0 || code === 8;
 
         if (!isNoAdToShow) throw err;
 
+        // Alternative: use hide/resume when "No ad to show" (e.g. after keyboard hide or page transition).
+        // Banner may already exist but in a bad state; hide+resume often restores it.
+        try {
+          await AdMob.hideBanner();
+          await new Promise((resolve) => setTimeout(resolve, 150));
+          await AdMob.resumeBanner();
+          this.bannerWasShown = true;
+          return;
+        } catch (_) {}
+
+        // Fallback: remove and recreate banner.
+        this.bannerWasShown = false;
         try {
           await AdMob.removeBanner();
         } catch (_) {}
-
-        // Small delay for native view teardown.
         await new Promise((resolve) => setTimeout(resolve, 250));
         await AdMob.showBanner(options);
+        this.bannerWasShown = true;
       }
     })();
     try {
@@ -86,9 +107,19 @@ export class AdMobService {
     AdMob.addListener(BannerAdPluginEvents.Loaded, () =>
       console.info('AdMob banner loaded')
     );
-    AdMob.addListener(BannerAdPluginEvents.FailedToLoad, (error: AdMobError) =>
-      console.error('AdMob banner failed to load', error)
-    );
+    AdMob.addListener(BannerAdPluginEvents.FailedToLoad, async (error: AdMobError) => {
+      console.error('AdMob banner failed to load', error);
+      const msg = String(error?.message ?? '');
+      const code = Number(error?.code ?? NaN);
+      const isNoAdToShow = msg.includes('No ad to show') || code === 0 || code === 8;
+      if (isNoAdToShow && Capacitor.isNativePlatform()) {
+        try {
+          await AdMob.hideBanner();
+          await new Promise((r) => setTimeout(r, 150));
+          await AdMob.resumeBanner();
+        } catch (_) {}
+      }
+    });
     AdMob.addListener(BannerAdPluginEvents.Opened, () =>
       console.info('AdMob banner opened')
     );
