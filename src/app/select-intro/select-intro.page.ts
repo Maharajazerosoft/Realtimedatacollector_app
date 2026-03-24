@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { WebservicesService } from '../providers/webservices/webservices.service';
 import { CommonService } from '../providers/common/common.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Capacitor } from '@capacitor/core';
-import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
-import { Platform } from '@ionic/angular';
+import { Platform, ViewWillEnter, ViewDidEnter } from '@ionic/angular';
+import { AdMobBannerService } from '../services/admob-banner.service';
 
 @Component({
   selector: 'app-select-intro',
@@ -14,7 +14,7 @@ import { Platform } from '@ionic/angular';
   styleUrls: ['./select-intro.page.scss'],
   standalone: false
 })
-export class SelectIntroPage implements OnInit {
+export class SelectIntroPage implements OnInit, OnDestroy, ViewWillEnter, ViewDidEnter {
 
   userid: any;
   introContent: any = {};
@@ -29,26 +29,40 @@ export class SelectIntroPage implements OnInit {
     private common: CommonService,
     private router: Router,
     public sanitize: DomSanitizer,
-    // private admobFree: AdMobFree,
     private platform: Platform,
+    private admobBanner: AdMobBannerService,
   ) { }
 
   ngOnInit() {
     this.fillInfo();
+  }
+
+  ionViewWillEnter() {
+    let code = localStorage.getItem("surveyCompanyCodeLocal");
+    if (code != null && code != "" && code != "undefined") {
+      this.router.navigate(["/companycode"]);
+    }
+  }
+
+  ionViewDidEnter() {
+    if (!Capacitor.isNativePlatform()) {
+      return;
+    }
+    const code = localStorage.getItem('surveyCompanyCodeLocal');
+    if (code != null && code !== '' && code !== 'undefined') {
+      return;
+    }
+    // Defer until WebView layout is ready (improves first-frame banner attach).
     this.platform.ready().then(() => {
-      this.showBannerAd();
+      setTimeout(() => void this.showBannerAd(), 450);
     });
   }
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad SearchresultPage");
-    this.showBannerAd();
+  ngOnDestroy(): void {
+    void this.admobBanner.disposeBannerRetryListeners();
   }
 
-
-
   fillInfo() {
-    this.showBannerAd();
     this.fetchingStatus = true;
     this.web.getData('getAdminIntroContent', '').then(res => {
       this.fetchingStatus = false;
@@ -67,13 +81,6 @@ export class SelectIntroPage implements OnInit {
     })
   }
 
-  ionViewWillEnter() {
-    let code = localStorage.getItem("surveyCompanyCodeLocal");
-    if (code != null && code != "" && code != "undefined") {
-      this.router.navigate(["/companycode"]);
-    }
-  }
-
   goToOtherContentPage(page: string) {
     if (page == 'privacy-master' || page == 'terms-master') {
       this.router.navigate(['/contentpage', { pageFor: page }]);
@@ -84,26 +91,7 @@ export class SelectIntroPage implements OnInit {
     if (!Capacitor.isNativePlatform()) {
       return;
     }
-
-    await this.platform.ready();
-
-    try {
-      await AdMob.initialize();
-
-      const options: BannerAdOptions = {
-        adId: 'ca-app-pub-8416006941552663/5184354352',
-        adSize: BannerAdSize.ADAPTIVE_BANNER,
-        position: BannerAdPosition.BOTTOM_CENTER,
-        margin: 0,
-        isTesting: false,
-      };
-
-      await AdMob.showBanner(options);
-      console.log('Home banner ad loaded');
-    } catch (err) {
-      console.error('Home banner ad error:', err);
-    }
+    await this.admobBanner.showBanner();
   }
-
 
 }

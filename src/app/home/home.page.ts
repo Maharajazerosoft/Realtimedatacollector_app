@@ -6,7 +6,7 @@ import { AlertController, NavController, Platform } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Capacitor } from '@capacitor/core';
-import { AdMob, BannerAdPosition, BannerAdSize, type BannerAdOptions } from '@capacitor-community/admob';
+import { AdMobBannerService } from '../services/admob-banner.service';
 
 @Component({
   selector: 'app-home',
@@ -28,13 +28,10 @@ export class HomePage {
     private alertCtrl: AlertController,
     public web: WebservicesService,
     public sanitize: DomSanitizer,
-    private platform: Platform
+    private platform: Platform,
+    private admobBanner: AdMobBannerService,
   ) {
     this.introContent = null;
-  }
-
-  ngOnInit() {
-    this.platform.ready().then(() => this.showBannerAd());
   }
 
   exitFromCompany() {
@@ -138,25 +135,7 @@ export class HomePage {
     if (!Capacitor.isNativePlatform()) {
       return;
     }
-
-    await this.platform.ready();
-
-    try {
-      await AdMob.initialize();
-
-      const options: BannerAdOptions = {
-        adId: 'ca-app-pub-8416006941552663/5184354352',
-        adSize: BannerAdSize.ADAPTIVE_BANNER,
-        position: BannerAdPosition.BOTTOM_CENTER,
-        margin: 0,
-        isTesting: false,
-      };
-
-      await AdMob.showBanner(options);
-      console.log('Home banner ad loaded');
-    } catch (err) {
-      console.error('Home banner ad error:', err);
-    }
+    await this.admobBanner.showBanner();
   }
 
 }

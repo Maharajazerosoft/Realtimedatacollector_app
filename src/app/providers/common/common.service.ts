@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AdMob } from '@capacitor-community/admob';
 import { LoadingController, Platform, ToastController } from '@ionic/angular';
+import { AdMobBannerService } from '../../services/admob-banner.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,9 @@ export class CommonService {
   constructor(
     public loadingController: LoadingController,
     public toastController: ToastController,
-    public platform: Platform) {
+    public platform: Platform,
+    private admobBanner: AdMobBannerService,
+  ) {
     console.log('Hello CommonProvider Provider');
   }
 
@@ -52,10 +54,7 @@ export class CommonService {
   }
 
   async presentToast(message: string) {
-    try {
-      // Hide banner temporarily
-      await AdMob.hideBanner();
-    } catch (e) { }
+    await this.admobBanner.hideBanner();
 
     const toast = await this.toastController.create({
       message,
@@ -65,11 +64,8 @@ export class CommonService {
 
     toast.present();
 
-    // Show banner again after toast is finished
     setTimeout(async () => {
-      try {
-        await AdMob.resumeBanner();
-      } catch (e) { }
+      await this.admobBanner.resumeBanner();
     }, 2500);
   }
 

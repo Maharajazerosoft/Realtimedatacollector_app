@@ -4,7 +4,7 @@ import { WebservicesService } from "../providers/webservices/webservices.service
 import { Router } from "@angular/router";
 import { Platform } from "@ionic/angular";
 import { Capacitor } from "@capacitor/core";
-import { AdMob, BannerAdPosition, BannerAdSize, type BannerAdOptions } from '@capacitor-community/admob';
+import { AdMobBannerService } from "../services/admob-banner.service";
 import { Keyboard } from "@capacitor/keyboard";
 
 @Component({
@@ -22,7 +22,8 @@ export class CompanycodePage implements OnInit {
     private common: CommonService,
     private web: WebservicesService,
     private router: Router,
-    private platform: Platform
+    private platform: Platform,
+    private admobBanner: AdMobBannerService,
   ) { }
 
   ngOnInit() {
@@ -133,16 +134,12 @@ export class CompanycodePage implements OnInit {
 
     Keyboard.addListener('keyboardWillShow', async () => {
       this.keyboardVisible = true;
-      try {
-        await AdMob.hideBanner();
-      } catch (e) { }
+      await this.admobBanner.hideBanner();
     });
 
     Keyboard.addListener('keyboardWillHide', async () => {
       this.keyboardVisible = false;
-      try {
-        await AdMob.resumeBanner();
-      } catch (e) { }
+      await this.admobBanner.resumeBanner();
     });
   }
 
@@ -150,22 +147,7 @@ export class CompanycodePage implements OnInit {
     if (!Capacitor.isNativePlatform()) {
       return;
     }
-    await this.platform.ready();
-    try {
-      await AdMob.initialize();
-
-      const options: BannerAdOptions = {
-        adId: 'ca-app-pub-8416006941552663/5184354352',
-        adSize: BannerAdSize.ADAPTIVE_BANNER,
-        position: BannerAdPosition.BOTTOM_CENTER,
-        isTesting: false,
-        margin: 0
-      };
-      await AdMob.showBanner(options);
-      console.log('Banner ad loaded');
-    } catch (e) {
-      console.log('Banner ad error:', e);
-    }
+    await this.admobBanner.showBanner();
   }
 
   ngOnDestroy() {

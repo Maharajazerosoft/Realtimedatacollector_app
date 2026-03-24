@@ -115,8 +115,7 @@
                   [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]"
                   (ionFocus)="onInputFocus()" (ionBlur)="onInputBlur()"></ion-input>
               </div>
-              <div *ngIf="tForm.qnType==='checkbox'" class="formCheckbox" [(ngModel)]="formData[getLoopVal(i, j)]"
-                name="formData[{{getLoopVal(i, j)}}]">
+              <div *ngIf="tForm.qnType==='checkbox'" class="formCheckbox">
                 <ion-item class="item-background-color">
                   <!-- <ion-label [innerHTML]="tForm.qnText"></ion-label> -->
                   <ion-select [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]"
