@@ -739,4 +739,26 @@ export class SurveyformPage implements OnInit {
       this.commonService.presentToast("PDF upload failed: " + (error as Error).message);
     }
   }
+
+  // Maharaja 13-04-2026
+  isChecked(selectedValues: any[], value: string): boolean {
+    if (!selectedValues) return false;
+    return selectedValues.includes(value);
+  }
+  
+  onCheckboxChange(event: any, loopIndex: number) {
+    if (!this.formData[loopIndex]) {
+      this.formData[loopIndex] = [];
+    }
+    const value = event.detail.value;
+    const checked = event.detail.checked;
+  
+    if (checked) {
+      if (!this.formData[loopIndex].includes(value)) {
+        this.formData[loopIndex] = [...this.formData[loopIndex], value];
+      }
+    } else {
+      this.formData[loopIndex] = this.formData[loopIndex].filter((v: string) => v !== value);
+    }
+  }
 }

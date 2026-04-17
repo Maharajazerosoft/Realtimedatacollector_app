@@ -94,15 +94,30 @@
                   </ion-radio-group>
                 </div>
               </div>
-              <div *ngIf="tForm.qnType==='select'" class="formSelect">
+              <!-- <div *ngIf="tForm.qnType==='select'" class="formSelect">
                 <ion-item class="item-background-color">
-                  <!-- <ion-label [innerHTML]="tForm.qnText"></ion-label> -->
+                  <ion-label [innerHTML]="tForm.qnText"></ion-label>
                   <ion-select placeholder="Select" [(ngModel)]="formData[getLoopVal(i, j)]"
                     name="formData[{{getLoopVal(i, j)}}]">
                     <ion-select-option value="{{select.optionValue}}"
                       *ngFor="let select of tForm.options">{{select.optionName}}</ion-select-option>
                   </ion-select>
                 </ion-item>
+              </div> -->
+              <div *ngIf="tForm.qnType==='select'" class="formRatio">
+                <div class="radio-group-container">
+                  <ion-radio-group [(ngModel)]="formData[getLoopVal(i, j)]" 
+                    name="formData[{{getLoopVal(i, j)}}]">
+                    <div class="row-item-block-flex">
+                      <div class="col-item-block-flex" *ngFor="let select of tForm.options">
+                        <ion-item lines="none" class="item-background-color">
+                          <ion-radio mode="md" value="{{select.optionValue}}" slot="start"></ion-radio>
+                          <ion-label>{{select.optionName}}</ion-label>
+                        </ion-item>
+                      </div>
+                    </div>
+                  </ion-radio-group>
+                </div>
               </div>
               <div *ngIf="tForm.qnType==='address' && formCountrySwitch=='yes'" class="formText">
                 <ion-input class="item-background-color" type="text" name="address" placeholder=""
@@ -113,16 +128,34 @@
                 <ion-input class="item-background-color" type="text" name="address" placeholder=""
                   [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]" (ionFocus)="onInputFocus()" (ionBlur)="onInputBlur()"></ion-input>
               </div>
-              <div *ngIf="tForm.qnType==='checkbox'" class="formCheckbox" [(ngModel)]="formData[getLoopVal(i, j)]"
+              <!-- <div *ngIf="tForm.qnType==='checkbox'" class="formCheckbox" [(ngModel)]="formData[getLoopVal(i, j)]"
                 name="formData[{{getLoopVal(i, j)}}]">
                 <ion-item class="item-background-color">
-                  <!-- <ion-label [innerHTML]="tForm.qnText"></ion-label> -->
+                  <ion-label [innerHTML]="tForm.qnText"></ion-label>
                   <ion-select [(ngModel)]="formData[getLoopVal(i, j)]" name="formData[{{getLoopVal(i, j)}}]"
                     multiple="true" placeholder="Select">
                     <ion-select-option value="{{select.optionValue}}"
                       *ngFor="let select of tForm.options">{{select.optionName}}</ion-select-option>
                   </ion-select>
                 </ion-item>
+              </div> -->
+              <div *ngIf="tForm.qnType==='checkbox'" class="formCheckbox">
+                <div class="radio-group-container">
+                  <div *ngFor="let select of tForm.options">
+                    <ion-item lines="none" class="item-background-color">
+                      <ion-checkbox
+                        slot="start"
+                        mode="md"
+                        [value]="select.optionValue"
+                        [checked]="isChecked(formData[getLoopVal(i, j)], select.optionValue)"
+                        (ionChange)="onCheckboxChange($event, getLoopVal(i, j))">
+                      </ion-checkbox>
+                      <ion-label style="white-space: normal; overflow-wrap: anywhere;">
+                        {{select.optionName}}
+                      </ion-label>
+                    </ion-item>
+                  </div>
+                </div>
               </div>
               <div *ngIf="tForm.qnType==='text'" class="formText">
                 <ion-input class="item-background-color" type="text" [(ngModel)]="formData[getLoopVal(i, j)]"

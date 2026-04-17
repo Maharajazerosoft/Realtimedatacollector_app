@@ -19,6 +19,8 @@ PODS:
     - Capacitor
   - CapacitorKeyboard (7.0.3):
     - Capacitor
+  - CapacitorPluginAppTrackingTransparency (3.0.0):
+    - Capacitor
   - CapacitorStatusBar (7.0.3):
     - Capacitor
   - Google-Mobile-Ads-SDK (12.12.0):
@@ -36,6 +38,7 @@ DEPENDENCIES:
   - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
   - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
+  - CapacitorPluginAppTrackingTransparency (from `../../node_modules/capacitor-plugin-app-tracking-transparency`)
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
 
 SPEC REPOS:
@@ -63,6 +66,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/haptics"
   CapacitorKeyboard:
     :path: "../../node_modules/@capacitor/keyboard"
+  CapacitorPluginAppTrackingTransparency:
+    :path: "../../node_modules/capacitor-plugin-app-tracking-transparency"
   CapacitorStatusBar:
     :path: "../../node_modules/@capacitor/status-bar"
 
@@ -76,11 +81,12 @@ SPEC CHECKSUMS:
   CapacitorFilesystem: 609d5cceca1ed93d7f25839dbfdfd224bfe78209
   CapacitorHaptics: b3fb2869e72c4466e18ce9ccbeb60a3d8723b3d4
   CapacitorKeyboard: 62f36104f26d53d8b3a2a43f2a69fe714f1777d5
+  CapacitorPluginAppTrackingTransparency: f0df8fe65d07d3854de3dad832caf192262bbaa5
   CapacitorStatusBar: 0659ddc7b1713764a05831463d215b177a15d054
   Google-Mobile-Ads-SDK: 4dde70a8c18d96b14f9548759b8cec6ecb0bc3e6
   GoogleUserMessagingPlatform: f8d0cdad3ca835406755d0a69aa634f00e76d576
   IONFilesystemLib: 89258b8e3e85465da93127d25d7ce37f977e8a6f
 
-PODFILE CHECKSUM: d99da2dd2fe15cce8a558b0481d8a0c86550a511
+PODFILE CHECKSUM: 93688b890c6cd94eb7ca62f0923b3072e3b5e6c2
 
 COCOAPODS: 1.16.2
